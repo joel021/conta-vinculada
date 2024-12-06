@@ -1,0 +1,36 @@
+{
+  "users" : [
+    {
+      "usuario": "ba393303",
+      "nome": "Fabio Damasceno Silva",
+      "dominio": "JFBA",
+      "unidade": {
+        "siglaUnidade": "JFBA",
+        "secaoJudiciaria": {
+          "cnpjSecao": "05442957000101"
+        }
+      },
+      "email": "fabio.damasceno@trf1.jus.br",
+      "papeis": [
+        "ROLE_ADMIN"
+      ],
+      "enabled": true
+    },
+    {
+      "usuario": "ba07577081531",
+      "nome": "Joel Machado Pires",
+      "dominio": "JFBA",
+      "unidade": {
+        "siglaUnidade": "JFBA",
+        "secaoJudiciaria": {
+          "cnpjSecao": "05442957000101"
+        }
+      },
+      "email": "joel.mpires@trf1.jus.br",
+      "papeis": [
+        "ROLE_ADMIN"
+      ],
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+alter table contrato_terceirizado add column data_desligamento date null;

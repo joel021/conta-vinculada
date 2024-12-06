@@ -1,0 +1,1 @@
+alter table secao_judiciaria add column sigla varchar(20) not null;

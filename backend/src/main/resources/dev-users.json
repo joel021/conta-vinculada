@@ -1,0 +1,69 @@
+{
+  "users" : [
+    {
+      "usuario": "uid=jduke,ou=Users,dc=jboss,dc=org",
+      "nome": "Duke Admin",
+      "dominio": "JFBA",
+      "unidade": {
+        "siglaUnidade": "SJBA",
+        "secaoJudiciaria": {
+          "cnpjSecao": "05442957000101"
+        }
+      },
+      "email": "email@email.com",
+      "papeis": [
+        "ROLE_GUEST"
+      ],
+      "enabled": true
+    },
+    {
+      "usuario": "uid=bwilliams,ou=Users,dc=jboss,dc=org",
+      "nome": "Williams GUEST",
+      "dominio": "JFBA",
+      "unidade": {
+        "siglaUnidade": "SJBA",
+        "secaoJudiciaria": {
+          "cnpjSecao": "05442957000101"
+        }
+      },
+      "email": "email2@email.com",
+      "papeis": [
+        "ROLE_ADMIN"
+      ],
+      "enabled": true
+    },
+    {
+      "usuario": "uid=ajohnson,ou=Users,dc=jboss,dc=org",
+      "nome": "Johnson Guest",
+      "dominio": "JFBA",
+      "unidade": {
+        "siglaUnidade": "SJBA",
+        "secaoJudiciaria": {
+          "cnpjSecao": "05442957000101"
+        }
+      },
+      "email": "email3@email.com",
+      "papeis": [
+        "ROLE_GUEST"
+      ],
+      "enabled": true
+    },
+    {
+      "usuario": "uid=jsmith,ou=Users,dc=jboss,dc=org",
+      "nome": "Jhon Smith",
+      "dominio": "JFBA",
+      "unidade": {
+        "siglaUnidade": "SJBA",
+        "secaoJudiciaria": {
+          "cnpjSecao": "05442957000101"
+        }
+      },
+      "email": "email4@email.com",
+      "papeis": [
+        "ROLE_GUEST"
+      ],
+      "enabled": true
+    }
+
+  ]
+}
