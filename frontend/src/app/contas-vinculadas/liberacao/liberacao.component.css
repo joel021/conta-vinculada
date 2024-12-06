@@ -1,0 +1,37 @@
+
+ table td{
+    border:none !important;
+  }
+
+.input-group .btn {
+    width: 30px; 
+    height: 30px; 
+    font-size: xx-small;
+  }
+
+.cabecalho{
+   
+    font-weight: bold;
+} 
+
+/* .modif:hover {
+    background-color: #027333;
+    color: white;
+} */ 
+
+/*select:invalid {
+  color:  #001A33;
+}*/
+
+/*#inputtipo{
+  width:auto; 
+  width:230px;
+  height: 32px; 
+ } */
+
+ 
+
+ 
+ 
+
+

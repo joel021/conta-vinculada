@@ -1,0 +1,135 @@
+@media (min-width: 1024px) {
+
+    .parent-component {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .left-component {
+        position: fixed;
+        overflow-y: hidden;
+        top: 0;
+        bottom: 0;
+        width: 20%;
+    }
+
+    .right-content-component {
+        width: 78%;
+        margin-left: 20%;
+    }
+
+    .top-menu {
+        display: none;
+    }
+
+    .footer-menu {
+        padding-left: 15%;
+    }
+}
+
+@media (max-width: 1023px) {
+    .left-component {
+        display: none;
+    }
+
+    .right-content-component {
+        width: 95%;
+        padding: 1em;
+    }
+
+    .top-menu {
+        display: block;
+    }
+}
+
+#mainNavBar {
+    padding: 20px;
+}
+
+.nav-link {
+    color: #e8f0ff;
+    padding: 20px 50px;
+    text-align: center;
+}
+
+.px-3 {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+
+.bg-dark {
+    background-color: #001A33 !important;
+    border-right: 1px solid #313f59;
+}
+
+.right-content-component {
+    padding-top: 3em;
+    margin-bottom: 3em;
+}
+
+.border-bottom {
+    border-bottom: solid #001A33
+}
+
+
+#menu .nav-item {
+    display: inline-block;
+    
+    border-radius: 0px;
+    text-decoration: none; 
+  }
+  
+  #menu .nav-item:hover {
+    text-decoration: underline; 
+  }
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bottom-text {
+    position: absolute;
+    bottom: 0;
+    width: 70%;
+    text-align: left;
+    padding: 20px 0;
+
+}
+
+.btn-custom {
+    background-color: #001A33;
+    border: none;
+}
+
+.nav-link {
+    padding: 8px !important;
+    text-align: left;
+}
+
+.nav-link.active {
+    color: var(--bs-nav-pills-link-active-color);
+    background-color: #003c75;
+}
+.sistema {
+    margin: 5px; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #ebeff3;
+}
+
+.setor {
+    text-align: center;
+    font-size: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ebeff3;
+}
+
+

@@ -1,0 +1,70 @@
+.centralizado {
+    text-align: center;
+    color: #ffffff;
+    padding-bottom: 40px;
+}
+
+.form-control-md{
+    min-height: 100%;
+}
+
+.form-select{
+    font-size: 90%;
+}
+
+.centralizadobutton {
+    text-align: center;
+}
+
+h5{
+    padding-top: 10px;
+    font-size: medium;
+}
+
+.banner {
+    width: 90%;
+}
+
+.botao {
+    background-color: #027333;
+}
+
+.botao:hover{
+    background-color: #45812b;
+}
+
+.mensagem {
+    background-color: #f5f7f5;
+    border: none;
+    color: red;
+    text-align: center;
+}
+
+
+.loginform {
+    background-color: #001A33;
+    display: block;
+    isolation: isolate;
+    width: 400px;
+    padding: 2em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+}
+
+.row {
+    position: fixed;
+    top: 10;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@media screen and (max-width: 600px){
+
+    .loginform{
+        width: 90%;
+    }
+}

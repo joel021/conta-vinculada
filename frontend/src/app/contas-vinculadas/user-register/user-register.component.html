@@ -1,0 +1,47 @@
+<div class="row">
+
+    <form class="registerform form-horizontal m-t-20" [formGroup]="registerForm" id="formRegister">
+        <div class="centralizado">
+            Registro de informações pessoais <br />
+            <div *ngIf="loading" class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div> <br>
+
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+        <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" formControlName="nome" [ngClass]="{ 'is-invalid': submitted && controls['nome'].errors }"
+                class="form-control form-control-md" placeholder="Sizano Santos" aria-describedby="basic-addon1"
+                required id="nameId" />
+            <div *ngIf="submitted && controls['nome'].errors" class="invalid-feedback">
+                <div *ngIf="controls['nome'].errors['required']">Forneça seu nome.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && controls['email'].errors }"
+                class="form-control form-control-md" placeholder="sizano@trf1.jus.br" aria-describedby="basic-addon1"
+                required id="emailId" />
+            <div *ngIf="submitted && controls['email'].errors" class="invalid-feedback">
+                <div *ngIf="controls['email'].errors['required']">Forneça seu email.</div>
+                <div *ngIf="controls['email'].errors['email']">Formato de email inválido.</div>
+            </div>
+        </div>
+
+        <div *ngIf="currentUser.token == null || currentUser.token == ''" class="form-group">
+            <label for="email">Confirme com sua senha</label>
+            <input id="passwordId" type="password" class="form-control form-control-md" placeholder="Sua senha"
+                aria-describedby="basic-addon1" required />
+        </div>
+
+        <br>
+        <div class="centralizadobutton">
+            <button id="buttonRegisterId" (click)="onSubmit()" [disabled]="loading" type="button"
+                class="btn btn-primary btn-md">Salvar</button>
+        </div>
+    </form>
+
+</div>

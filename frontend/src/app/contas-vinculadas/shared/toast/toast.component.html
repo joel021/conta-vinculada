@@ -1,0 +1,11 @@
+<div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true"
+  data-bs-autohide="false" [ngClass]="customClass">
+  <div class="toast-header">
+    <strong class="me-auto">{{ title }}</strong>
+    <button *ngIf="customClass !== 'loading-toast'" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" 
+    (click)="closeHit.emit(true)"></button>
+  </div>
+  <div class="toast-body">
+    {{ message }}
+  </div>
+</div>

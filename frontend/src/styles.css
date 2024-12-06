@@ -1,0 +1,95 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+/* You can add global styles to this file, and also import other style files */
+
+.error-toast{
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index : 0;
+    padding: 10px;
+    border: 1px solid #ff0000;
+    background-color: #ffe6e6;
+    color: #ff0000; 
+}
+
+.loading-toast {
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index: 0;
+    padding: 10px;
+    border: 1px solid #ffc107; 
+    background-color: #fff3cd; 
+    color: #856404;
+    
+}
+
+.info-toast {
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index: 0;
+    padding: 10px;
+    border: 1px solid #17a2b8; 
+    background-color: #d1ecf1; 
+    color: #0c5460; 
+  }
+
+  .alert-toast {
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index: 0;
+    padding: 10px;
+    border: 1px solid #ffc107;
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+  .red-text {
+    color: red; 
+}.error-toast{
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index : 0;
+    padding: 10px;
+    border: 1px solid #ff0000;
+    background-color: #ffe6e6;
+    color: #ff0000; 
+}
+
+.loading-toast {
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index: 0;
+    padding: 10px;
+    border: 1px solid #ffc107; 
+    background-color: #fff3cd; 
+    color: #856404;
+    
+}
+
+.info-toast {
+    position: fixed;
+    top: 15%;
+    left: 44%;
+    z-index: 0;
+    padding: 10px;
+    border: 1px solid #17a2b8; 
+    background-color: #d1ecf1; 
+    color: #0c5460; 
+  }
+
+  
+.input-group .btn {
+    width: 30px; 
+    height: 30px; 
+    font-size: xx-small;
+}
+
+.btn-light{
+    border: 1px solid #0e0d0d;
+    margin-right: 30px;
+}

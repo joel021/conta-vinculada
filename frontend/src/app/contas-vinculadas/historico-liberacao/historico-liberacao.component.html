@@ -1,0 +1,63 @@
+<app-top-left-menu>
+    
+    <div class="container">
+        <!--<div *ngIf="errorMessage && !loading" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+        <div *ngIf="loading" class="alert alert-warning" role="alert">
+            Carregando, aguarde.
+        </div> -->
+        <div class="row">
+            <div class="md-8">
+                <br>
+                <h4>Histórico de Liberação
+            </h4>
+
+                 
+                    <table class="table table-active">
+                        <thead>
+                            <tr>
+                                <th scope="col" >Tipo de Liberação</th>
+                                <!--<th scope="col" class="text-center">N° Contrato</th>-->
+                               
+                            </tr>
+                        </thead>
+                        <br>
+                        <tbody class="table text-left" >
+        
+                              <tr *ngIf="historicoLiberacao">
+
+                                <td>{{ historicoLiberacao.numero}}</td>
+                                <!--<td>{{ historicoLiberacao.tipo}}</td>-->
+                               <!-- <td>{{ historico.contratoTerceirizado }}</td>-->
+                                
+
+                              </tr>                                 
+                        </tbody>
+                       
+                    </table>
+                
+          
+            </div>
+
+    
+           
+        </div>
+ 
+    </div>
+
+</app-top-left-menu>
+
+
+
+
+<!-- <div *ngIf="historicoLiberacaos">
+    <h2>Histórico de Liberação</h2>
+    <ul>
+      <li *ngFor="let historico of historicoLiberacaos">
+        {{ historico.tipo }} - {{ historico.data }}
+      </li>
+    </ul>
+  </div> -->
+
+

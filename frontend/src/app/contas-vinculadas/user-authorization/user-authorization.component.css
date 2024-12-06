@@ -1,0 +1,19 @@
+input[type="month"] {
+    border: none;
+
+}
+
+.quantitySelect {
+    border: none;
+}
+
+.form-select {
+    border: none;
+
+
+}
+
+.bi-check-circle {
+    color: white;
+    border: none;
+}

@@ -1,0 +1,64 @@
+
+<div class="row">
+    <img src="../../assets/img/back-trf1.png" alt="">
+    
+    <form class="loginform form-horizontal m-t-20"  [formGroup]="loginForm" id="formLoginId">
+        
+        <div class="centralizado"> 
+            
+            <img class="banner" src="../../assets/img/bahia.png" alt="">
+            <img class ="banner" src="../../assets/img/AJGeSocial+.png" alt="">
+            <h5>Núcleo de Administração Financeira e Patrimonial (NUCAF)</h5>
+            <div *ngIf="loading" class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text sm">
+                    <select id="sectionId" style="text-transform: uppercase;" class="form-select form-select-sm" aria-label="Selecione a seção">
+                        <option selected value="jfba">jfba</option>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <input type="text" formControlName="username"
+                [ngClass]="{ 'is-invalid': submitted && controls['username'].errors }" class="form-control form-control-sm campo"
+                placeholder="matrícula" aria-label="matríula" aria-describedby="basic-addon1" required=""
+                id="usernameId" />
+
+            <div *ngIf="submitted && controls['username'].errors" class="invalid-feedback">
+                <div *ngIf="controls['username'].errors['required']">Forneça sua matrícula da Justiça.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password"></label>
+            <input type="text" formControlName="password"
+                [ngClass]="{ 'is-invalid': submitted && controls['password'].errors }" class="form-control form-control-md campo"
+                placeholder="senha" aria-label="password" aria-describedby="basic-addon1" required="" id="passwordId"
+                type="password" />
+            <div *ngIf="submitted && controls['password'].errors" class="invalid-feedback">
+                <div *ngIf="controls['password'].errors['required']">Forneça sua senha.</div>
+            </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="mensagem alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+        <br>
+
+        <div>
+            <a href=""></a>
+        </div>
+
+        <div class="centralizadobutton">
+            <div class="alert alert-primary" *ngIf="message && !loading">{{message}}</div>
+            <button id="buttonLoginId"  (click)="onSubmit()" [disabled]="loading" type="submit"
+                class="btn btn-success botao">Entrar</button>
+        </div>
+
+    </form>
+
+
+</div>

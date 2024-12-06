@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="left-component d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+            <div class="sistema">Controle de Conta Vinculada</div>
+            <div class="setor">Seção de Registros Financeiros (SERFI)</div>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="/contratos"
+                        class="nav-link {{pageUrl.indexOf('/contratos') > -1 ? 'active' : 'text-white'}}"
+                        aria-current="page">
+                        <i class="bi bi-card-list" style="margin-right: 10px"></i>
+                        Contratos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/user-authorization"
+                        class="nav-link {{pageUrl.indexOf('/user-authorization') > -1 ? 'active' : 'text-white'}}"
+                        aria-current="page">
+                        <i class="bi bi-person-check" style="margin-right: 10px"></i>
+                        Autorização de Usuários
+                    </a>
+                </li>
+
+            </ul>
+            <hr>
+
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <strong>{{ (user.nome != null) ? user.nome : user.username}}</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="/user-register">Editar perfil</a></li>
+                    <li><a class="dropdown-item" href="/login">Sair</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right-content-component">
+            <ng-content></ng-content>
+
+            <div class="menu-content-up-footer"></div>
+        </div>
+    </div>
+
+</div>

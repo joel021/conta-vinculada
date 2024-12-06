@@ -1,0 +1,80 @@
+<app-top-left-menu>
+    <div class="content">
+        <div class="toast-container">
+            <div *ngIf="!loading && errorMessage">
+                <div *ngFor="let toast of toasts">
+                    <app-toast [title]="'Erro'" [message]="errorMessage "
+                        [customClass]="toast.type === 'error' ? 'loading-toast' : 'error-toast'"
+                        (closeHit)="toast.isShow = true">
+                    </app-toast>
+                </div>
+            </div>
+            <div *ngIf="loading">
+                <div *ngFor="let toast of toasts">
+                    <app-toast [title]="'Status'" [message]="'Loading...'" [message]="'Carregando, aguarde.'"
+                        [customClass]="toast.type === 'loading' ? 'error-toast' : 'loading-toast'"
+                        (closeHit)="toast.isShow = true"></app-toast>
+                </div>
+            </div>
+            <div *ngIf="!loading">
+                <div *ngIf="!loading && message">
+                    <div *ngFor="let toast of toasts">
+                        <app-toast [title]="toast.title" [message]="message"
+                            [customClass]="toast.type === 'alert' ? 'error-toast' : 'alert-toast'"
+                            (closeHit)="clearMessage()" ></app-toast>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3>Pesquisar Contratos</h3>
+        <br>
+        <form class="d-flex" (ngSubmit)="pesquisarContrato(nomeEmpresaDigitada)">
+            <input class="form-control me-2 input" type="search" placeholder="Digite o nome da empresa..."
+                aria-label="Pesquisar" [(ngModel)]="nomeEmpresaDigitada" id="pesquisarContratoId" name="pesquisarContrato"
+                (input)="verificarInput()">
+            <button class="btn btn-primary modif" type="submit" [disabled]="isDisabled" id="btnpesquisarContratoId">Pesquisar</button>
+        </form>
+        <div *ngIf="isDisabled== true" class="error-message blue-text">
+            Para pesquisar, digite no mínimo 3 caracteres.
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="md-12" *ngFor="let contrato of empresasEncontradas;let i = index">
+            <h5 class="mt-4">Empresa: {{ empresasEncontradas[i].pessoaJuridica?.nome}}</h5>
+
+            <table class="table table-striped table-hover mx-2">
+                <thead>
+                    <tr class="table  text-center">
+                        <th scope="col">Nº Contrato</th>
+                        <th scope="col">Unidade</th>
+                        <th scope="col">Início vigência</th>
+                        <th scope="col">Fim vigência</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr>
+                        <td>{{ contrato.numero }}</td>
+                        <td>{{ contrato.unidade }}</td>
+                        <td>{{ contrato.inicioVigencia | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ contrato.fimVigencia | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ contrato.status }}</td>
+                        <td>
+                            <button id="btnVContratoId" class="btn btn-primary" (click)="visualizarContrato(contrato.idContrato)"
+                                type="button">Visualizar empregados</button>
+                        </td>
+                    </tr>   
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</app-top-left-menu>
