@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,6 +16,6 @@ public class UserDataDTO extends UserAuthDTO {
 
   private String email;
   private String nome;
-  private Set<Papel> papels;
+  private List<Papel> papels;
   private Unidade unidade;
 }

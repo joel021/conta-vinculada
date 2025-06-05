@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SecaoJudiciariaRepository extends JpaRepository<SecaoJudiciaria, Integer> {
+public interface SecaoJudiciariaRepository extends JpaRepository<SecaoJudiciaria, String> {
     List<SecaoJudiciaria> findBySigla(String sigla);
 }

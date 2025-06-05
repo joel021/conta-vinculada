@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,7 +52,7 @@ public class ProvisaoControllerTests extends ControllerTests {
         date = LocalDate.of(2024, 2, 1);
 
         Usuario usuario = userService.save(new Usuario(1, "userNonAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_GUEST), "JFBA"));
+                null, null, null, true, List.of(Papel.ROLE_GUEST), "JFBA"));
         userNonAdmin = userService.allowAccess(usuario);
 
         PessoaFisica pessoaFisica = pessoaFisicaService.saveIfNotExists(new PessoaFisica("00930300000"));

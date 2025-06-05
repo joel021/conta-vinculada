@@ -11,7 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Component
@@ -58,7 +58,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     public Usuario setupSystemUser() {
 
         final Usuario systemAdmin = new Usuario(null, "system_user_admin", "Administrador do Sistema",
-                null, null, true, Set.of(Papel.ROLE_ADMIN), "SJBA");
+                null, null, true, List.of(Papel.ROLE_ADMIN), "SJBA");
         return userService.save(systemAdmin);
     }
 

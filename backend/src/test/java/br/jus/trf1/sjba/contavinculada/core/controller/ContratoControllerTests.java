@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
 import java.util.Set;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,7 +33,7 @@ public class ContratoControllerTests extends ControllerTests {
     public void setup() {
 
         userNonAdmin = userService.allowAccess(userService.save(new Usuario(null, "userNonAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_GUEST), "JFBA")));
+                null, null, null, true, List.of(Papel.ROLE_GUEST), "JFBA")));
 
         pessoaJuridicaExistent = new PessoaJuridica();
         pessoaJuridicaExistent.setNome("Pessoa");

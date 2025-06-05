@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SecaoJudiciariaService {
@@ -31,13 +32,11 @@ public class SecaoJudiciariaService {
 
     public SecaoJudiciaria findOrCreate(SecaoJudiciaria secaoJudiciaria, String dominio) {
 
-        final String sigla = secaoJudiciaria.getSigla() != null ? secaoJudiciaria.getSigla() : "";
-
-        List<SecaoJudiciaria> secaoJudiciariaList = findBySigla(sigla);
+        Optional<SecaoJudiciaria> secaoJudiciariaList = secaoJudiciariaRepository.findById(secaoJudiciaria.getCnpjSecao());
         if (secaoJudiciariaList.isEmpty()) {
             secaoJudiciaria.setSiglaByDominio(dominio);
             return secaoJudiciariaRepository.save(secaoJudiciaria);
         }
-        return secaoJudiciariaList.get(0);
+        return secaoJudiciariaList.get();
     }
 }

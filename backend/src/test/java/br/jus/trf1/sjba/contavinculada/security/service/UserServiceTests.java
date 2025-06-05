@@ -17,7 +17,6 @@ import org.springframework.core.env.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -72,7 +71,7 @@ public class UserServiceTests {
         userService.deleteByUsuario(usuarioToUpdate.getUsuario());
 
         for (Usuario usuario : adminsModified) {
-            usuario.setPapeis(Set.of(Papel.ROLE_ADMIN));
+            usuario.setPapeis(List.of(Papel.ROLE_ADMIN));
             userRepository.save(usuario);
         }
     }
@@ -111,17 +110,17 @@ public class UserServiceTests {
         List<Usuario> adminsUsers = userRepository.findByPapeisContains(Papel.ROLE_ADMIN);
 
         for(Usuario adminUser: adminsUsers) {
-            adminUser.setPapeis(Set.of(Papel.ROLE_GUEST));
+            adminUser.setPapeis(List.of(Papel.ROLE_GUEST));
             adminsModified.add(userRepository.saveAndFlush(adminUser));
         }
 
         //2. Take only one admin to the system
-        adminsUsers.get(0).setPapeis(Set.of(Papel.ROLE_ADMIN));
+        adminsUsers.get(0).setPapeis(List.of(Papel.ROLE_ADMIN));
         userRepository.saveAndFlush(adminsUsers.get(0));
 
         //Test: try to update the unique admin user to guest user, expect a exception
         Usuario userToUpdate = adminsUsers.get(0);
-        userToUpdate.setPapeis(Set.of(Papel.ROLE_GUEST));
+        userToUpdate.setPapeis(List.of(Papel.ROLE_GUEST));
 
         assertThrows(NotAllowedException.class, () -> {
             userService.updateAuthorization(userToUpdate);

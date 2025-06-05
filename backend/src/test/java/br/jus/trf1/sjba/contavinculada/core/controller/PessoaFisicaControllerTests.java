@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,7 +20,7 @@ public class PessoaFisicaControllerTests extends ControllerTests {
     @BeforeEach
     public void setup() {
         userNonAdmin = userService.allowAccess(userService.save(new Usuario(null, "userNonAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_GUEST), "JFBA")));
+                null, null, null, true, List.of(Papel.ROLE_GUEST), "JFBA")));
     }
 
     @Test

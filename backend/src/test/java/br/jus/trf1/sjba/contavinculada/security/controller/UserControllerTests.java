@@ -57,18 +57,18 @@ public class UserControllerTests {
         UserDataDTO admin = new UserDataDTO();
         admin.setUsuario("admin");
         admin.setDominio("JFBA");
-        admin.setPapels(Set.of(Papel.ROLE_ADMIN));
+        admin.setPapels(List.of(Papel.ROLE_ADMIN));
 
         userAdmin = userService.allowAccess(userService.registerFromDataDto(admin));
         userNonAdmin = userService.allowAccess(userRepository.save(new Usuario(null, "userNonAdmin980398d",
-                null, null, "userNonAdmin@email.com", true, Set.of(Papel.ROLE_GUEST), "JFBA")));
+                null, null, "userNonAdmin@email.com", true, List.of(Papel.ROLE_GUEST), "JFBA")));
 
         usersRegistered = new ArrayList<>();
 
         for(int i = 0; i < 10; i++) {
             String randomUserName = "randomUser"+i;
             userRepository.save(new Usuario(null, randomUserName, null, null,
-                    randomUserName+"@email.com",false, Set.of(Papel.ROLE_GUEST),"JFBA"));
+                    randomUserName+"@email.com",false, List.of(Papel.ROLE_GUEST),"JFBA"));
             usersRegistered.add(randomUserName);
         }
 
@@ -76,6 +76,7 @@ public class UserControllerTests {
         when(ldapService.authenticate("uid=admin,ou=system", "secret")).thenReturn(true);
         when(ldapService.authenticate("uid=jduke,ou=Users,dc=jboss,dc=org", "theduke")).thenReturn(true);
         when(ldapService.authenticate("jfba\\uid=jduke,ou=Users,dc=jboss,dc=org", "theduke")).thenReturn(true);
+        when(ldapService.authenticate("jfba\\randomUser1", "password")).thenReturn(true);
     }
 
     @AfterEach
@@ -270,7 +271,7 @@ public class UserControllerTests {
         userToUpdate.setNome("Guest User Updated");
         userToUpdate.setEmail("guestUserUpdated@gmail.com");
         userToUpdate.setSenha("theduke");
-        userToUpdate.setPapels(Set.of(Papel.ROLE_GUEST));
+        userToUpdate.setPapels(List.of(Papel.ROLE_GUEST));
         userToUpdate.setUnidade(unidade);
         userToUpdate.setDominio("JFBA");
 
@@ -291,7 +292,7 @@ public class UserControllerTests {
         userToUpdate.setNome("Guest User Updated");
         userToUpdate.setEmail("guestUserUpdated@gmail.com");
         userToUpdate.setSenha("theduke");
-        userToUpdate.setPapels(Set.of(Papel.ROLE_GUEST));
+        userToUpdate.setPapels(List.of(Papel.ROLE_GUEST));
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/users/update/"+userToUpdate.getUsuario())
                 .content(new ObjectMapper().writer().withDefaultPrettyPrinter()
@@ -320,7 +321,7 @@ public class UserControllerTests {
         Usuario usuario = new Usuario();
         usuario.setUsuario(userNonAdmin.getUsuario());
         usuario.setEnabled(true);
-        usuario.setPapeis(Set.of(Papel.ROLE_GUEST));
+        usuario.setPapeis(List.of(Papel.ROLE_GUEST));
 
         String result = mockMvc.perform(MockMvcRequestBuilders.patch("/users/authorization")
                 .header("Authorization", "Bearer " + userAdmin.getToken())
@@ -329,6 +330,33 @@ public class UserControllerTests {
 
         Usuario user = new ObjectMapper().reader().readValue(result, Usuario.class);
         assert user.getPapeis().contains(Papel.ROLE_GUEST);
+    }
+
+    @Test
+    public void updateNonAuthorizedTest() throws Exception {
+
+        UserDataDTO newUserDto = new UserDataDTO();
+        newUserDto.setNome("New User Of The System");
+        newUserDto.setDominio("JFBA");
+        newUserDto.setEmail("randomUser1@jfba.br");
+        newUserDto.setUsuario("randomUser1");
+        newUserDto.setSenha("password");
+
+        SecaoJudiciaria secaoJudiciaria = new SecaoJudiciaria();
+        secaoJudiciaria.setCnpjSecao("083232343232");
+        secaoJudiciaria.setSiglaByDominio("JFBA");
+        secaoJudiciaria.setNome("Seção Judiciária da Bahia");
+
+        Unidade unidade = new Unidade();
+        unidade.setNomeUnidade("Secao Judiciaria da Bahia");
+        unidade.setSiglaUnidade("SJBA");
+
+        unidade.setSecaoJudiciaria(secaoJudiciaria);
+        newUserDto.setUnidade(unidade);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/users/update/newUserRegisteredWihtougEmail")
+                .content(new ObjectMapper().writer().writeValueAsString(newUserDto)).contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
 }

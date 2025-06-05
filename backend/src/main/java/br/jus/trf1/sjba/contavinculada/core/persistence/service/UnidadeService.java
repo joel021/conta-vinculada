@@ -1,11 +1,13 @@
 package br.jus.trf1.sjba.contavinculada.core.persistence.service;
 
+import br.jus.trf1.sjba.contavinculada.core.persistence.model.SecaoJudiciaria;
 import br.jus.trf1.sjba.contavinculada.core.persistence.model.Unidade;
 import br.jus.trf1.sjba.contavinculada.core.persistence.repository.UnidadeRepository;
 import br.jus.trf1.sjba.contavinculada.exception.NotAcceptableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +31,12 @@ public class UnidadeService {
 
     public Unidade findOrCreate(Unidade unidade, String dominio) {
 
-        List<Unidade> unidadeList = unidadeRepository.findBySiglaUnidadeAndSecaoJudiciaria(unidade.getSiglaUnidade(), unidade.getSecaoJudiciaria());
+        List<Unidade> unidadeList = new ArrayList<>();
+
+        if (unidade.getSecaoJudiciaria() != null && unidade.getSecaoJudiciaria().getCnpjSecao() != null) {
+            unidadeList = unidadeRepository.findBySiglaUnidadeAndSecaoJudiciaria(unidade.getSiglaUnidade(), unidade.getSecaoJudiciaria());
+        }
+
         if (unidadeList.isEmpty()) {
 
             if (unidade.getSecaoJudiciaria() != null) {

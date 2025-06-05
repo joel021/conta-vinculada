@@ -3,6 +3,7 @@ package br.jus.trf1.sjba.contavinculada.core.provision;
 import br.jus.trf1.sjba.contavinculada.core.persistence.model.ContratoTerceirizado;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -12,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProvisionCalcTests {
 
-    private static ProvisionCalc provisionCalc;
-    private static ContratoTerceirizado contratoTerceirizado;
-    private static LocalDate endDate;
+    private ProvisionCalc provisionCalc;
+    private ContratoTerceirizado contratoTerceirizado;
+    private LocalDate endDate;
 
-    private static LocalDate startDate;
+    private LocalDate startDate;
 
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public void setup() {
         
         startDate = LocalDate.of(2000, 1, 1);
         provisionCalc = new ProvisionCalc(36.64);

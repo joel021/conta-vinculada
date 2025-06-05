@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,10 +43,10 @@ public class IncGrupoAContratoControllerTests extends ControllerTests {
     public void setup() {
 
         userNonAdmin = userService.allowAccess(userService.save(new Usuario(null, "userNonAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_GUEST), "JFBA")));
+                null, null, null, true, List.of(Papel.ROLE_GUEST), "JFBA")));
 
         Usuario usuarioAdmin = userService.save(new Usuario(null, "userAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_ADMIN), "JFBA"));
+                null, null, null, true, List.of(Papel.ROLE_ADMIN), "JFBA"));
         userAdmin = userService.allowAccess(usuarioAdmin);
 
         pessoaJuridica = new PessoaJuridica("994003003303");

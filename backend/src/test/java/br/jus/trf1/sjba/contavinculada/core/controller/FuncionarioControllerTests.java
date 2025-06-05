@@ -33,11 +33,11 @@ public class FuncionarioControllerTests extends  ControllerTests {
     public void setup() {
 
         Usuario usuario = userService.save(new Usuario(null, "userNonAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_GUEST), "JFBA"));
+                null, null, null, true, List.of(Papel.ROLE_GUEST), "JFBA"));
         userNonAdmin = userService.allowAccess(usuario);
 
         Usuario usuarioAdmin = userService.save(new Usuario(null, "userAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_ADMIN), "JFBA"));
+                null, null, null, true, List.of(Papel.ROLE_ADMIN), "JFBA"));
         userAdmin = userService.allowAccess(usuarioAdmin);
 
         PessoaFisica pessoaFisica = PessoaFisica.builder().cpf("12121212121").build();

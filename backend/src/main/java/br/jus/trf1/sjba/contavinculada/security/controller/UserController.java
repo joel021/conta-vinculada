@@ -76,7 +76,7 @@ public class UserController {
             UserAuthenticatedDTO userDetails = new UserAuthenticatedDTO();
             userDetails.setUsuario(userDataDTO.getUsuario());
             userDetails.setToken("");
-            userDetails.setPapels(Set.of(Papel.ROLE_GUEST));
+            userDetails.setPapels(List.of(Papel.ROLE_GUEST));
             response.put("userDetails", userDetails);
             return ResponseEntity.ok().body(response);
         }

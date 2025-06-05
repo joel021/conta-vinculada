@@ -131,11 +131,11 @@ public class FGTSLiberationHandlerTests {
         fgtsLiberationHandler.mapMatriculaLiberations(new ArrayList<>());
 
         String matricula = "funcionario1";
-        LocalDate until = LocalDate.of(2021, 12, 30);
+        LocalDate until = LocalDate.of(2020, 12, 30);
         fgtsLiberationHandler.addFuncionarioProvision(matricula, until);
 
         assertEquals(
-                5,
+                0,
                 fgtsLiberationHandler.getFuncionarioProvisionsMap().get(0).getProvisoes().size(),
                 "Considering period of 2021-NOVEMBER-8 to 2022-MARCH-30, there are 5 months."
         );

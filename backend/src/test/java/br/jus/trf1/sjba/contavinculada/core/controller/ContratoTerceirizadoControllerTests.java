@@ -49,11 +49,11 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
     public void setup() {
 
         Usuario adminUsuario = userService.save(new Usuario(2, "userAdmin", null, null,
-                null, true, Set.of(Papel.ROLE_ADMIN), "JFBA"));
+                null, true, List.of(Papel.ROLE_ADMIN), "JFBA"));
         userAdmin = userService.allowAccess(adminUsuario);
 
         Usuario usuario = userService.save(new Usuario(1, "userNonAdmin",
-                null, null, null, true, Set.of(Papel.ROLE_GUEST), "JFBA"));
+                null, null, null, true, List.of(Papel.ROLE_GUEST), "JFBA"));
         userNonAdmin = userService.allowAccess(usuario);
 
         PessoaFisica pessoaFisica = pessoaFisicaService.saveIfNotExists(new PessoaFisica("00930300000"));

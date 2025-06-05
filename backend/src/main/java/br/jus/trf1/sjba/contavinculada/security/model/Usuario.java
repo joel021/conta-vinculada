@@ -42,22 +42,36 @@ public class Usuario {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<Papel> papeis = new HashSet<>();
+    private List<Papel> papeis = new ArrayList<>();
 
     @NotNull(message = "Dominínio do usuário não pode ser nulo.")
     private String dominio;
 
-    public Set<Papel> getPapeis() {
+    public List<Papel> getPapeis() {
 
         Set<Papel> papeisCopySet = new HashSet<>();
         final List<Papel> allPapeis = Arrays.stream(Papel.values()).toList();
 
         for (Papel papel:papeis.stream().toList()) {
-            for(int i = papel.ordinal(); i < allPapeis.size(); i++) {
+            for (int i = papel.ordinal(); i < allPapeis.size(); i++) {
                 papeisCopySet.add(allPapeis.get(i));
             }
         }
-        this.papeis = papeisCopySet;
+        this.papeis = new ArrayList<>();
+        this.papeis.addAll(List.copyOf(papeisCopySet.stream().toList()));
+
+        this.papeis.sort(new Comparator<Papel>() {
+            @Override
+            public int compare(Papel o1, Papel o2) {
+                if (o1.ordinal() < o2.ordinal()) {
+                    return -1;
+                } else if (o1.ordinal() > o2.ordinal()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+
         return papeis;
     }
 
