@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -71,10 +72,10 @@ public class ProvisaoControllerTests extends ControllerTests {
         IncGrupoAContrato incGrupoAContrato = new IncGrupoAContrato();
         incGrupoAContrato.setContrato(contrato);
         incGrupoAContrato.setData(LocalDate.now());
-        incGrupoAContrato.setIncGrupoA(34.5);
+        incGrupoAContrato.setIncGrupoA(new BigDecimal("34.5"));
 
         ContratoTerceirizado contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo",
-                6_000, 40, date, null, Calendar.getInstance(),
+                new BigDecimal("6.000"), 40, date, null, Calendar.getInstance(),
                 null, null, null, null);
 
         funcionarioRepository.save(funcionario);
@@ -88,7 +89,7 @@ public class ProvisaoControllerTests extends ControllerTests {
                     .builder()
                     .contrato(contratoWithoutIncGrupoA)
                     .funcionario(funcionario)
-                    .remuneracao(1000+i)
+                    .remuneracao(new BigDecimal("100.0").add(new BigDecimal(String.valueOf(i))))
                     .dataInicio(LocalDate.now())
                     .build();
             contratoTerceirizadoRepository.save(contratoTerceirizadoI);

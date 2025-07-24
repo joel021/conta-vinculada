@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -79,13 +80,13 @@ public class LiberacaoControllerTests extends ControllerTests {
         incGrupoAContratoRepository.save(IncGrupoAContrato.builder()
                 .data(inicioContrato)
                 .contrato(contrato)
-                .incGrupoA(35.8d)
+                .incGrupoA(new BigDecimal("35.8"))
                 .build());
 
         Lotacao lotacao = Lotacao.builder()
                 .descricao("SALVADOR")
                 .build();
-        contratoTerceirizado = new ContratoTerceirizado(18765, funcionario, contrato, "34f", 6600d,
+        contratoTerceirizado = new ContratoTerceirizado(18765, funcionario, contrato, "34f", new BigDecimal("6600"),
                 40, inicioContrato, null, Calendar.getInstance(), null, null, lotacao, null);
 
         contratoTerceirizado = contratoTerceirizadoService.saveIfNotExists(contratoTerceirizado, "SJBA");

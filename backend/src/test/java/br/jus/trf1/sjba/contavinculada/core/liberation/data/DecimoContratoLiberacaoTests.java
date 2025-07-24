@@ -5,6 +5,7 @@ import br.jus.trf1.sjba.contavinculada.core.provision.DecimoTerceiroPeriodProvis
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,7 +16,13 @@ public class DecimoContratoLiberacaoTests {
     @Test
     public void totalProvisionTest() {
 
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
 
         Liberacao liberacao = new Liberacao();
         liberacao.setDataLiberacao(LocalDate.of(2022,1,1));
@@ -33,7 +40,13 @@ public class DecimoContratoLiberacaoTests {
     @Test
     public void totalLiberationTest() {
 
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
 
         Liberacao liberacao = new Liberacao();
         liberacao.setDataLiberacao(LocalDate.of(2022,1,1));
@@ -51,7 +64,13 @@ public class DecimoContratoLiberacaoTests {
     @Test
     public void totalNotLiberationTest() {
 
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
 
         Liberacao liberacao = new Liberacao();
         liberacao.setDataLiberacao(LocalDate.of(2022,1,1));

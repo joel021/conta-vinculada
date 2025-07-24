@@ -5,6 +5,7 @@ import br.jus.trf1.sjba.contavinculada.core.persistence.model.Liberacao;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.DecimoProvision;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -47,9 +48,9 @@ public class DecimoTerceiroPeriodProvision extends FuncionarioPeriodProvision {
 
     public Provision filterToDecimo(Provision provision) {
 
-        provision.setFerias(0);
-        provision.setAbFerias(0);
-        provision.setMultaFGTS(0);
+        provision.setFerias(new BigDecimal("0"));
+        provision.setAbFerias(new BigDecimal("0"));
+        provision.setMultaFGTS(new BigDecimal("0"));
 
         return provision;
     }
@@ -60,11 +61,11 @@ public class DecimoTerceiroPeriodProvision extends FuncionarioPeriodProvision {
     @Override
     public void updateTotalProvisionsAndLiberations() {
 
-        totalLiberation = 0;
-        totalProvision = 0;
-        for (Integer year: yearDecimoProvisions.keySet()) {
-            totalLiberation += yearDecimoProvisions.get(year).getTotalLiberation();
-            totalProvision += yearDecimoProvisions.get(year).getTotalProvision();
+        totalLiberation = BigDecimal.ZERO;
+        totalProvision = BigDecimal.ZERO;
+        for (Integer year : yearDecimoProvisions.keySet()) {
+            totalLiberation = totalLiberation.add(yearDecimoProvisions.get(year).getTotalLiberation());
+            totalProvision = totalProvision.add(yearDecimoProvisions.get(year).getTotalProvision());
         }
     }
 

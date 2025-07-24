@@ -7,7 +7,7 @@ import br.jus.trf1.sjba.contavinculada.security.model.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Date;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +47,7 @@ public class FuncionarioContratosMapperTests {
                     funcionario,
                     contrato,
                     "Some Cargo",
-                    100.0f+i,
+                    new BigDecimal("100.0").add(new BigDecimal(""+i)),
                     40,
                     dataInicio,
                     criadoPor,

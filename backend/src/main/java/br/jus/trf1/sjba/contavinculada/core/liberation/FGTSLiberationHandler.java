@@ -8,6 +8,7 @@ import br.jus.trf1.sjba.contavinculada.core.provision.data.FGTSProvision;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import br.jus.trf1.sjba.contavinculada.exception.NotAcceptableException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -80,9 +81,9 @@ public class FGTSLiberationHandler extends FuncionarioLiberationMapper {
 
     public Provision filterToFGTS(Provision provision) {
 
-        provision.setDecimo(0);
-        provision.setFerias(0);
-        provision.setAbFerias(0);
+        provision.setDecimo(new BigDecimal("0"));
+        provision.setFerias(new BigDecimal("0"));
+        provision.setAbFerias(new BigDecimal("0"));
 
         return provision;
     }

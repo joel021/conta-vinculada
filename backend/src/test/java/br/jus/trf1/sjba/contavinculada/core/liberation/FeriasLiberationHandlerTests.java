@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class FeriasLiberationHandlerTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContractLocalDate)
                 .criadoEm(fromLocalDate(dateContractLocalDate))
-                .remuneracao(6600.0d)
+                .remuneracao(new BigDecimal("6600.0"))
                 .cargo("ENGENHEIRO CIVIL carga horária 30h semanais")
                 .build();
 
@@ -42,15 +43,15 @@ public class FeriasLiberationHandlerTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContractAdictiveLocalDate)
                 .criadoEm(fromLocalDate(dateContractAdictiveLocalDate.plusMonths(2))) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 1")
                 .build();
 
         LocalDate dateAditiveIncGrupA = LocalDate.of(2022, 6, 1);
 
         List<IncGrupoAContrato> incGrupoAContratoes = new ArrayList<>();
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(37.8).data(dateAditiveIncGrupA).build()); //ordered by date desc
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(35.8).data(dateContractLocalDate).build());
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("37.8")).data(dateAditiveIncGrupA).build()); //ordered by date desc
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("35.8")).data(dateContractLocalDate).build());
 
         liberacao = new Liberacao();
         liberacao.setTipo(TipoLiberacao.FERIAS);

@@ -9,6 +9,7 @@ import br.jus.trf1.sjba.contavinculada.exception.NotAcceptableException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +41,7 @@ public class FuncionarioProvisionHistoryTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContract)
                 .criadoEm(dateContractCalendar)
-                .remuneracao(10_000)
+                .remuneracao(new BigDecimal("10.000"))
                 .cargo("Cargo 0")
                 .build();
 
@@ -51,15 +52,15 @@ public class FuncionarioProvisionHistoryTests {
                 .funcionario(funcionario)
                 .dataInicio(dateAditive)
                 .criadoEm(criadoEm) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 1")
                 .build();
 
         List<IncGrupoAContrato> incGrupoAContratoes = new ArrayList<>();
         dateAditiveIncGrupA = dateAditive.plusMonths(1);
 
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(36.5).data(dateAditiveIncGrupA).build()); //ordered by date desc
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(34.5).data(dateContract).build());
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("36.5")).data(dateAditiveIncGrupA).build()); //ordered by date desc
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("34.5")).data(dateContract).build());
 
         funcionarioProvisionHistory = new FuncionarioProvisionHistory(incGrupoAContratoes);
     }
@@ -139,7 +140,7 @@ public class FuncionarioProvisionHistoryTests {
         ContratoTerceirizado contratoTerceirizadoAditive3 = ContratoTerceirizado.builder()
                 .contrato(contratoTerceirizado.getContrato())
                 .funcionario(contratoTerceirizado.getFuncionario())
-                .remuneracao(15_000)
+                .remuneracao(new BigDecimal("15.000"))
                 .criadoEm(fromLocalDate(date))//discovered in 2024-APRIL-15
                 .dataInicio(LocalDate.of(2024, Calendar.MARCH, 12))
                 .build();

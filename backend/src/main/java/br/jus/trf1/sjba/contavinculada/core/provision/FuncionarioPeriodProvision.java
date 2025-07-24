@@ -6,6 +6,7 @@ import br.jus.trf1.sjba.contavinculada.core.persistence.model.Liberacao;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,8 +19,8 @@ public abstract class FuncionarioPeriodProvision {
     private WorkPeriod workPeriod;
     private Funcionario funcionario;
     private Integer contratoTerceirizadoId;
-    double totalProvision;
-    double totalLiberation;
+    BigDecimal totalProvision;
+    BigDecimal totalLiberation;
 
     public FuncionarioPeriodProvision(List<Liberacao> liberacaoList) {
 
@@ -63,19 +64,19 @@ public abstract class FuncionarioPeriodProvision {
         this.contratoTerceirizadoId = contratoTerceirizadoId;
     }
 
-    public double getTotalProvision() {
+    public BigDecimal getTotalProvision() {
         return totalProvision;
     }
 
-    public void setTotalProvision(double totalProvision) {
+    public void setTotalProvision(BigDecimal totalProvision) {
         this.totalProvision = totalProvision;
     }
 
-    public double getTotalLiberation() {
+    public BigDecimal getTotalLiberation() {
         return totalLiberation;
     }
 
-    public void setTotalLiberation(double totalLiberation) {
+    public void setTotalLiberation(BigDecimal totalLiberation) {
         this.totalLiberation = totalLiberation;
     }
 }

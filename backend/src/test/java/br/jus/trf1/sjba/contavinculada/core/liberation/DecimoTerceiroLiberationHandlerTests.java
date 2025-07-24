@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +38,7 @@ public class DecimoTerceiroLiberationHandlerTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContract)
                 .criadoEm(fromLocalDate(dateContract))
-                .remuneracao(6600.0d)
+                .remuneracao(new BigDecimal("6600.0"))
                 .cargo("ENGENHEIRO CIVIL carga horária 30h semanais")
                 .build();
 
@@ -46,7 +48,7 @@ public class DecimoTerceiroLiberationHandlerTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContractAdictive)
                 .criadoEm(Calendar.getInstance()) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 1")
                 .build();
 
@@ -56,15 +58,15 @@ public class DecimoTerceiroLiberationHandlerTests {
                         .build())
                 .dataInicio(dateContractAdictive)
                 .criadoEm(Calendar.getInstance()) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 2")
                 .build();
 
         LocalDate dateAditiveIncGrupA = LocalDate.of(2022, 1, 1);
 
         List<IncGrupoAContrato> incGrupoAContratoes = new ArrayList<>();
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(37.8).data(dateAditiveIncGrupA).build()); //ordered by date desc
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(35.8).data(dateContract).build());
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("37.8")).data(dateAditiveIncGrupA).build()); //ordered by date desc
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("35.8")).data(dateContract).build());
 
         liberacao = new Liberacao();
         liberacao.setTipo(TipoLiberacao.DECIMO_TERCEIRO);
@@ -79,14 +81,27 @@ public class DecimoTerceiroLiberationHandlerTests {
     @Test
     public void addFuncionarioProvisionTest() {
 
+        BigDecimal value = new BigDecimal("814.72");
+        BigDecimal multiplier = new BigDecimal("2");
+        BigDecimal hundred = new BigDecimal("100");
+
         LocalDate endYear = LocalDate.of(2021, 12, 31);
         decimoTerceiroLiberationHandler.mapMatriculaLiberations(List.of(liberacao));
         decimoTerceiroLiberationHandler.addFuncionarioProvision("funcionario1", endYear);
 
-        double totalProvisionExpected = Math.ceil(2*814.72*100)/100;
-        double totalProvision = decimoTerceiroLiberationHandler.getFuncionarioPeriodProvisions().get(0).getYearDecimoProvisions().get(2021).getTotalProvision();
+        BigDecimal totalProvisionExpected = multiplier.multiply(value)
+                .multiply(hundred)
+                .setScale(0, RoundingMode.CEILING)
+                .divide(hundred, 2, RoundingMode.HALF_EVEN);
 
-        assertEquals(totalProvisionExpected, Math.ceil(totalProvision*100)/100);
+        BigDecimal totalProvision = decimoTerceiroLiberationHandler.getFuncionarioPeriodProvisions().get(0)
+                .getYearDecimoProvisions().get(2021).getTotalProvision();
+
+        BigDecimal totalProvisionRounded = totalProvision.multiply(hundred)
+                .setScale(0, RoundingMode.CEILING)
+                .divide(hundred, 2, RoundingMode.HALF_EVEN);
+
+        assertEquals(totalProvisionExpected, totalProvisionRounded);
     }
 
     @Test

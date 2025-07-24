@@ -1,7 +1,6 @@
 package br.jus.trf1.sjba.contavinculada.core.persistence.model;
 
 import br.jus.trf1.sjba.contavinculada.security.model.Usuario;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -9,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.time.LocalDate;
 
@@ -32,9 +32,9 @@ public class IncGrupoAContrato implements Auditable {
     @NotNull(message = "Grupo A contrato deve estar associado a um contrato.")
     public Contrato contrato;
 
-    @Column(name = "inc_grupo_a")
+    @Column(name = "inc_grupo_a", precision = 19, scale = 10)
     @NotNull(message = "Você deve fornecer o valor do grupo A.")
-    public Double incGrupoA;
+    public BigDecimal incGrupoA;
 
     @ManyToOne
     @JoinColumn(name="id_criado_por")

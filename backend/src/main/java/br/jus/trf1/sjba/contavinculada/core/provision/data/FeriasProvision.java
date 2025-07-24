@@ -4,6 +4,7 @@ import br.jus.trf1.sjba.contavinculada.core.liberation.data.WorkPeriod;
 import br.jus.trf1.sjba.contavinculada.core.persistence.model.Liberacao;
 import br.jus.trf1.sjba.contavinculada.core.persistence.model.OficioMovimentacao;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static br.jus.trf1.sjba.contavinculada.utils.DateUtils.*;
@@ -14,7 +15,7 @@ public class FeriasProvision extends Provisions {
     private WorkPeriod workPeriod;
     private LocalDate dataLiberacao;
     private LocalDate endDate;
-    private double totalLiberation;
+    private BigDecimal totalLiberation;
     private OficioMovimentacao oficioMovimentacao;
 
     public void addProvision(Provision provision) {
@@ -67,7 +68,7 @@ public class FeriasProvision extends Provisions {
         }
     }
 
-    public double getTotalLiberation() {
+    public BigDecimal getTotalLiberation() {
         return totalLiberation;
     }
 

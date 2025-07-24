@@ -5,6 +5,7 @@ import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +17,13 @@ public class FeriasProvisionTests {
     public void addProvisionStartDateTest() {
 
         FeriasProvision feriasProvision = new FeriasProvision();
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
         provision.setDate(LocalDate.of(2024, 1, 31));
         provision.setInicioVigencia(LocalDate.of(2024, 1, 13));
 
@@ -30,7 +37,13 @@ public class FeriasProvisionTests {
     public void addProvisionEndDateTest() {
 
         FeriasProvision feriasProvision = new FeriasProvision();
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
         provision.setDate(LocalDate.of(2024, 1, 31));
         provision.setInicioVigencia(LocalDate.of(2024, 1, 13));
 
@@ -44,7 +57,13 @@ public class FeriasProvisionTests {
     public void addProvisionStartDateBeforeCurrentDateTest() {
 
         FeriasProvision feriasProvision = new FeriasProvision();
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
         provision.setDate(LocalDate.of(2024, 1, 31));
         provision.setInicioVigencia(LocalDate.of(2023, 1, 13));
 
@@ -58,15 +77,33 @@ public class FeriasProvisionTests {
     public void addProvisionEndDateEqualsLastDateTest() {
 
         FeriasProvision feriasProvision = new FeriasProvision();
-        Provision provision = new Provision(0.34);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
         provision.setDate(LocalDate.of(2024, 1, 31));
         provision.setInicioVigencia(LocalDate.of(2024, 1, 13));
 
-        Provision provision2 = new Provision(0.34);
+        Provision provision2 = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
         provision2.setDate(LocalDate.of(2024, 3, 31));
         provision2.setInicioVigencia(LocalDate.of(2024, 1, 13));
 
-        Provision provision3 = new Provision(0.34);
+        Provision provision3 = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.34")
+        );
         provision3.setDate(LocalDate.of(2024, 2, 28));
         provision3.setInicioVigencia(LocalDate.of(2024, 1, 13));
 

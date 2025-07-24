@@ -6,6 +6,7 @@ import br.jus.trf1.sjba.contavinculada.exception.NotAcceptableException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class FuncionarioContratoMapperTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContract)
                 .criadoEm(fromLocalDate(dateContract))
-                .remuneracao(10_000)
+                .remuneracao(new BigDecimal("10.000"))
                 .cargo("Cargo 0")
                 .build();
 
@@ -40,7 +41,7 @@ public class FuncionarioContratoMapperTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContractAdictive.plusMonths(2))
                 .criadoEm(fromLocalDate(dateContractAdictive.plusMonths(2))) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 1")
                 .build();
 

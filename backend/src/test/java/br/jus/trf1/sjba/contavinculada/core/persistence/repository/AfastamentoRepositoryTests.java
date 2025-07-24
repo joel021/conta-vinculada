@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.UUID;
@@ -79,10 +80,10 @@ public class AfastamentoRepositoryTests {
         funcionario = funcionarioRepository.save(funcionario);
         funcionarioSubstituto = funcionarioRepository.save(funcionarioSubstituto);
 
-        contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", 123.45333f,
+        contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, today, criador, Calendar.getInstance(), null, null, null, null);
 
-        final var contratoTerceirizadoSubstituto = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", 123.45333f,
+        final var contratoTerceirizadoSubstituto = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, today, criador, Calendar.getInstance(), null, null, null, null);
 
         contratoTerceirizadoRepository.save(contratoTerceirizado);

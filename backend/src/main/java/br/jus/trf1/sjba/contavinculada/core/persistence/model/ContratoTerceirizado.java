@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Calendar;
 
@@ -35,7 +36,8 @@ public class ContratoTerceirizado implements Auditable {
 
     public String cargo;
 
-    public double remuneracao;
+    @Column(precision = 19, scale = 10)
+    public BigDecimal remuneracao;
 
     public int cargaHoraria;
 

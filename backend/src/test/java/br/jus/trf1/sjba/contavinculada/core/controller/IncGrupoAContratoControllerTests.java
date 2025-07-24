@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +135,7 @@ public class IncGrupoAContratoControllerTests extends ControllerTests {
     public void saveWithoutContrato() throws Exception {
 
         IncGrupoAContrato incGrupoAContrato = new IncGrupoAContrato();
-        incGrupoAContrato.setIncGrupoA(0.3);
+        incGrupoAContrato.setIncGrupoA(new BigDecimal("0.3"));
         incGrupoAContrato.setContrato(null);
         incGrupoAContrato.setData(LocalDate.now());
 
@@ -149,7 +150,7 @@ public class IncGrupoAContratoControllerTests extends ControllerTests {
     public void saveWithoutContratoId() throws Exception {
 
         IncGrupoAContrato incGrupoAContrato = new IncGrupoAContrato();
-        incGrupoAContrato.setIncGrupoA(0.3);
+        incGrupoAContrato.setIncGrupoA(new BigDecimal("0.3"));
         incGrupoAContrato.setContrato(new Contrato());
         incGrupoAContrato.setData(LocalDate.now());
 

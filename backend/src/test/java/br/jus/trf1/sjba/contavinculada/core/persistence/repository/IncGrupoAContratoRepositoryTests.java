@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
@@ -45,7 +46,7 @@ public class IncGrupoAContratoRepositoryTests {
                 null,true,null, "JFBA");
         criador = userService.save(criador);
 
-        incGrupoAContrato = new IncGrupoAContrato(null, LocalDate.now(), contrato, 93.3333337d,
+        incGrupoAContrato = new IncGrupoAContrato(null, LocalDate.now(), contrato, new BigDecimal("93.3333337"),
                 criador, Calendar.getInstance(), null, null);
         incGrupoAContrato = incGrupoAContratoRepository.save(incGrupoAContrato);
     }

@@ -4,13 +4,15 @@ import br.jus.trf1.sjba.contavinculada.core.persistence.model.Contrato;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public abstract class PeriodContratoProvisionLiberation {
 
     Contrato contrato;
-    double totalProvision;
-    double totalLiberation;
+    BigDecimal totalProvision;
+    BigDecimal totalLiberation;
 
     public abstract PeriodContratoProvisionLiberation contrato(Contrato contrato);
 

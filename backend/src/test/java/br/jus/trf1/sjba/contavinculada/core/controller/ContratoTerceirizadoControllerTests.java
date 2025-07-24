@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -69,7 +70,7 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
         contratoExitent = contratoOptional.orElseGet(() -> contratoRepository.save(contratoExitent));
 
         contratoTerceirizado = new ContratoTerceirizado(8731, funcionario, contratoExitent, "Cargo",
-                123.45333f, 40, LocalDate.now(), null, Calendar.getInstance(),
+                new BigDecimal("123.45333"), 40, LocalDate.now(), null, Calendar.getInstance(),
                 null, null, null, null);
 
         funcionarioRepository.save(funcionario);
@@ -125,7 +126,7 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
                 .contrato(contratoExitent)
                 .funcionario(funcionario)
                 .cargo("Cargo")
-                .remuneracao(4500)
+                .remuneracao(new BigDecimal("4500"))
                 .cargaHoraria(40)
                 .dataInicio(LocalDate.now())
                 .lotacao(Lotacao.builder().descricao("SALVADOR").build())
@@ -148,7 +149,7 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
                 .contrato(contratoExitent)
                 .funcionario(funcionario)
                 .cargo("Cargo")
-                .remuneracao(6000)
+                .remuneracao(new BigDecimal("6000"))
                 .cargaHoraria(40)
                 .dataInicio(LocalDate.of(2022,3,3))
                 .lotacao(Lotacao.builder().descricao("SALVADOR").build())
@@ -169,7 +170,7 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
                 .contrato(contratoExitent)
                 .funcionario(funcionario)
                 .cargo("Cargo")
-                .remuneracao(6000)
+                .remuneracao(new BigDecimal("6000"))
                 .cargaHoraria(40)
                 .dataInicio(contratoTerceirizado.getDataInicio())
                 .lotacao(Lotacao.builder().descricao("SALVADOR").build())
@@ -189,7 +190,7 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
                 .contrato(contratoExitent)
                 .funcionario(funcionario)
                 .cargo("Cargo")
-                .remuneracao(6000)
+                .remuneracao(new BigDecimal("6000"))
                 .cargaHoraria(40)
                 .dataInicio(LocalDate.now())
                 .lotacao(Lotacao.builder().descricao("SALVADOR").build())
@@ -213,7 +214,7 @@ public class ContratoTerceirizadoControllerTests extends ControllerTests {
                 .contrato(contratoExitent)
                 .funcionario(funcionario)
                 .cargo("Cargo")
-                .remuneracao(6000)
+                .remuneracao(new BigDecimal("6000"))
                 .cargaHoraria(40)
                 .dataInicio(LocalDate.of(2021,4,4))
                 .lotacao(Lotacao.builder().descricao("SALVADOR").build())

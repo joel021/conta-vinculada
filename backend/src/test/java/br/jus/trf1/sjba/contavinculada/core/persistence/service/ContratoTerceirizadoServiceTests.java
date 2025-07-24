@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -84,10 +85,10 @@ public class ContratoTerceirizadoServiceTests {
         funcionarioDesligado = funcionarioRepository.save(funcionarioDesligado);
         funcionarioAtivo = funcionarioRepository.save(funcionarioAtivo);
 
-        contratoTerceirizado = new ContratoTerceirizado(1, funcionarioDesligado, contrato, "Cargo", 123.45333f,
+        contratoTerceirizado = new ContratoTerceirizado(1, funcionarioDesligado, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, startContract, criador, Calendar.getInstance(), null, null, null, null);
 
-        contratoTerceirizadoDesligado = new ContratoTerceirizado(2, funcionarioDesligado, contrato, "Cargo", 123.45333f,
+        contratoTerceirizadoDesligado = new ContratoTerceirizado(2, funcionarioDesligado, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, LocalDate.of(2021,1,1), criador, Calendar.getInstance(), null, null, null,
                 LocalDate.of(2022,1,1));
 
@@ -145,7 +146,7 @@ public class ContratoTerceirizadoServiceTests {
     @Test
     public void saveIfNotExistsSaveTest() throws NotAcceptableException, NotFoundException {
 
-        ContratoTerceirizado contratoTerceirizadoNotExistent = new ContratoTerceirizado(7, funcionarioDesligado, contrato, "Cargo", 123.45333f,
+        ContratoTerceirizado contratoTerceirizadoNotExistent = new ContratoTerceirizado(7, funcionarioDesligado, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, LocalDate.of(2022,2,11), criador, Calendar.getInstance(), null, null, null, null);
 
         final var contratoTerceirizadoSaved = contratoTerceirizadoService.saveIfNotExists(contratoTerceirizadoNotExistent, "SJBA");

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,7 +69,7 @@ public class LiberacaoRepositoryTests {
                 .criadoPor(criador).racaCor("Pardo")
                 .build();
         funcionario = funcionarioRepository.save(funcionario);
-        contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", 123.45333f,
+        contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo",new BigDecimal("123.45333"),
                 40, today, criador, Calendar.getInstance(), null, null, null,
                 LocalDate.of(2024,4,1));
 

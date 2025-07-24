@@ -6,6 +6,7 @@ import br.jus.trf1.sjba.contavinculada.security.model.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -36,7 +37,7 @@ public class AuditCascadeSetterTests {
                 .matricula("ba00000000000").isOficialJustica(false).nivel(NivelEnsino.I).criadoEm(Calendar.getInstance())
                 .build();
 
-        auditableObject = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", 123.45333f,
+        auditableObject = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, today, null, null, null, null, null, null);
     }
 

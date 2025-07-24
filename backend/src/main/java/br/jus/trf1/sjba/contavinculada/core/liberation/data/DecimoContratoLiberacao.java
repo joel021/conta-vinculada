@@ -5,6 +5,7 @@ import br.jus.trf1.sjba.contavinculada.core.provision.DecimoTerceiroPeriodProvis
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -21,16 +22,16 @@ public class DecimoContratoLiberacao extends PeriodContratoProvisionLiberation {
 
     @Override
     public void calcTotalProvisionLiberation() {
-        totalProvision = 0;
-        totalLiberation = 0;
+        totalProvision = BigDecimal.ZERO;
+        totalLiberation = BigDecimal.ZERO;
 
         if (funcionarioProvisions == null) {
             return;
         }
 
-        for (DecimoTerceiroPeriodProvision decimoTerceiroPeriodProvision: funcionarioProvisions) {
-            totalProvision += decimoTerceiroPeriodProvision.getTotalProvision();
-            totalLiberation += decimoTerceiroPeriodProvision.getTotalLiberation();
+        for (DecimoTerceiroPeriodProvision decimoTerceiroPeriodProvision : funcionarioProvisions) {
+            totalProvision = totalProvision.add(decimoTerceiroPeriodProvision.getTotalProvision());
+            totalLiberation = totalLiberation.add(decimoTerceiroPeriodProvision.getTotalLiberation());
         }
     }
 

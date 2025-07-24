@@ -7,6 +7,7 @@ import br.jus.trf1.sjba.contavinculada.security.model.Usuario;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class FuncionarioContratoDtoTests {
                     funcionario,
                     contrato,
                     "Some Cargo",
-                    100.0f+i,
+                    new BigDecimal("100.0").add(new BigDecimal(String.valueOf(i))),
                     40,
                     dataInicio,
                     criadoPor,

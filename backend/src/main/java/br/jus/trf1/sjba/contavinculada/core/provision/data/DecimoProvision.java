@@ -6,6 +6,7 @@ import br.jus.trf1.sjba.contavinculada.core.persistence.model.OficioMovimentacao
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class DecimoProvision extends Provisions {
 
     private LocalDate dataLiberacao;
-    private double totalLiberation;
+    private BigDecimal totalLiberation;
     private OficioMovimentacao oficioMovimentacao;
     private WorkPeriod workPeriod;
 
@@ -27,7 +28,7 @@ public class DecimoProvision extends Provisions {
     public void updatedTotalLiberation() {
 
         if (dataLiberacao == null) {
-            totalLiberation = 0;
+            totalLiberation = BigDecimal.ZERO;
         } else {
             totalLiberation = getTotalProvision();
         }

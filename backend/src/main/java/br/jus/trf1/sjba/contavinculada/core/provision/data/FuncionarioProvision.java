@@ -6,6 +6,7 @@ import br.jus.trf1.sjba.contavinculada.core.persistence.model.OficioMovimentacao
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -15,13 +16,13 @@ public class FuncionarioProvision extends Provisions {
     private WorkPeriod workPeriod;
     private LocalDate dataLiberacao;
     private Funcionario funcionario;
-    private double totalLiberation;
+    private BigDecimal totalLiberation;
     private OficioMovimentacao oficioMovimentacao;
 
     public void setDataLiberacao(LocalDate dataLiberacao) {
 
         this.dataLiberacao = dataLiberacao;
-        totalLiberation = 0;
+        totalLiberation = BigDecimal.ZERO;
         updateTotalLiberacao();
     }
 

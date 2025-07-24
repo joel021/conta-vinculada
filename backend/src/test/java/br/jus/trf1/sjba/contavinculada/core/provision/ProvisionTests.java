@@ -2,58 +2,95 @@ package br.jus.trf1.sjba.contavinculada.core.provision;
 
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProvisionTests {
 
+    private static final int SCALE = 10;
+    private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
+
     @Test
     public void setRemuneracaoFeriasTest() {
 
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(800);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(new BigDecimal("800"));
 
-        assertEquals(800 * provision.getRATE_FERIAS(), provision.getFerias());
+        assertEquals(new BigDecimal("800").multiply(provision.getRATE_FERIAS()).setScale(SCALE, ROUNDING_MODE), provision.getFerias());
     }
 
     @Test
     public void setRemuneracaoAbFeriasTest() {
 
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(800);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(new BigDecimal("800"));
 
-        assertEquals(800 * provision.getRATE_AB_FERIAS(), provision.getAbFerias());
+        assertEquals(new BigDecimal("800").multiply(provision.getRATE_AB_FERIAS()).setScale(SCALE, ROUNDING_MODE), provision.getAbFerias());
     }
 
     @Test
     public void setRemuneracaoDecimoTest() {
 
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(800);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(new BigDecimal("800"));
 
-        assertEquals(800 * provision.getRATE_DECIMO(), provision.getDecimo());
+        assertEquals(new BigDecimal("800").multiply(provision.getRATE_DECIMO()).setScale(SCALE, ROUNDING_MODE), provision.getDecimo());
     }
 
     @Test
     public void setRemuneracaoMultaFGTSTest() {
 
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(800);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(new BigDecimal("800"));
 
-        assertEquals(800 * provision.getRATE_MULTA_FGTS(), provision.getMultaFGTS());
+        assertEquals(new BigDecimal("800").multiply(provision.getRATE_MULTA_FGTS()).setScale(SCALE, ROUNDING_MODE), provision.getMultaFGTS());
     }
 
     @Test
     public void setRemuneracaoSubTotalTest() {
 
-        final double remunaracao = 800;
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(remunaracao);
+        final BigDecimal remuneracao = new BigDecimal("800");
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(remuneracao);
 
-        final double abFerias = remunaracao * provision.getRATE_AB_FERIAS();
-        final double ferias = remunaracao * provision.getRATE_FERIAS();
-        final double decimo = remunaracao * provision.getRATE_DECIMO();
+        final BigDecimal abFerias = remuneracao.multiply(provision.getRATE_AB_FERIAS()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal ferias = remuneracao.multiply(provision.getRATE_FERIAS()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal decimo = remuneracao.multiply(provision.getRATE_DECIMO()).setScale(SCALE, ROUNDING_MODE);
 
-        final double subTotal = decimo + ferias + abFerias;
+        final BigDecimal subTotal = decimo.add(ferias).add(abFerias).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(subTotal, provision.getSubTotal());
     }
@@ -61,16 +98,22 @@ public class ProvisionTests {
     @Test
     public void setRemuneracaoIncGrupoATest() {
 
-        final double remunaracao = 800;
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(remunaracao);
+        final BigDecimal remuneracao = new BigDecimal("800");
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(remuneracao);
 
-        final double abFerias = remunaracao * provision.getRATE_AB_FERIAS();
-        final double ferias = remunaracao * provision.getRATE_FERIAS();
-        final double decimo = remunaracao * provision.getRATE_DECIMO();
+        final BigDecimal abFerias = remuneracao.multiply(provision.getRATE_AB_FERIAS()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal ferias = remuneracao.multiply(provision.getRATE_FERIAS()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal decimo = remuneracao.multiply(provision.getRATE_DECIMO()).setScale(SCALE, ROUNDING_MODE);
 
-        final double subTotal = decimo + ferias + abFerias;
-        final double incGrupoA = provision.getRATE_INC_GRUPO_A() * subTotal;
+        final BigDecimal subTotal = decimo.add(ferias).add(abFerias).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal incGrupoA = provision.getRATE_INC_GRUPO_A().multiply(subTotal).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(incGrupoA, provision.getIncGrupoA());
     }
@@ -78,19 +121,25 @@ public class ProvisionTests {
     @Test
     public void setRemuneracaoTotalProvisaoMensalTest() {
 
-        final double remuneracao = 800;
-        Provision provision = new Provision(0.358);
+        final BigDecimal remuneracao = new BigDecimal("800");
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
 
-        final double abFerias = remuneracao * provision.getRATE_AB_FERIAS();
-        final double ferias = remuneracao * provision.getRATE_FERIAS();
-        final double decimo = remuneracao * provision.getRATE_DECIMO();
-        final double multaFGTS = remuneracao * provision.getRATE_MULTA_FGTS();
+        final BigDecimal abFerias = remuneracao.multiply(provision.getRATE_AB_FERIAS()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal ferias = remuneracao.multiply(provision.getRATE_FERIAS()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal decimo = remuneracao.multiply(provision.getRATE_DECIMO()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal multaFGTS = remuneracao.multiply(provision.getRATE_MULTA_FGTS()).setScale(SCALE, ROUNDING_MODE);
 
-        final double subTotal = decimo + ferias + abFerias;
-        final double incGrupoA = provision.getRATE_INC_GRUPO_A() * subTotal;
+        final BigDecimal subTotal = decimo.add(ferias).add(abFerias).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal incGrupoA = provision.getRATE_INC_GRUPO_A().multiply(subTotal).setScale(SCALE, ROUNDING_MODE);
 
-        final double totalProvisaoMensal = subTotal + incGrupoA + multaFGTS;
+        final BigDecimal totalProvisaoMensal = subTotal.add(incGrupoA).add(multaFGTS).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(totalProvisaoMensal, provision.getTotalProvisaoMensal());
     }
@@ -98,29 +147,41 @@ public class ProvisionTests {
     @Test
     public void setDecimoSubtotalTest() {
 
-        final double remuneracao = 800;
-        final double decimo = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal decimo = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setDecimo(decimo);
 
-        final double subTotal = decimo + provision.getFerias() + provision.getAbFerias();
+        final BigDecimal subTotal = decimo.add(provision.getFerias()).add(provision.getAbFerias()).setScale(SCALE, ROUNDING_MODE);
         assertEquals(subTotal, provision.getSubTotal());
     }
 
     @Test
     public void setDecimoTotalMensalProvisaoTest() {
 
-        final double remuneracao = 800;
-        final double decimo = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal decimo = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setDecimo(decimo);
 
-        final double subTotal = decimo + provision.getFerias() + provision.getAbFerias();
-        final double totalProvisaoMensal = subTotal + provision.getIncGrupoA() + provision.getMultaFGTS();
+        final BigDecimal subTotal = decimo.add(provision.getFerias()).add(provision.getAbFerias()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal totalProvisaoMensal = subTotal.add(provision.getIncGrupoA()).add(provision.getMultaFGTS()).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(totalProvisaoMensal, provision.getTotalProvisaoMensal());
     }
@@ -128,14 +189,20 @@ public class ProvisionTests {
     @Test
     public void setFeriasSubtotalTest() {
 
-        final double remuneracao = 800;
-        final double ferias = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal ferias = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setFerias(ferias);
 
-        final double subTotal = provision.getDecimo() + ferias + provision.getAbFerias();
+        final BigDecimal subTotal = provision.getDecimo().add(ferias).add(provision.getAbFerias()).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(subTotal, provision.getSubTotal());
     }
@@ -143,15 +210,21 @@ public class ProvisionTests {
     @Test
     public void setFeriasTotalMensalProvisaoTest() {
 
-        final double remuneracao = 800;
-        final double ferias = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal ferias = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setFerias(ferias);
 
-        final double subTotal = provision.getDecimo() + ferias + provision.getAbFerias();
-        final double totalProvisaoMensal = subTotal + provision.getIncGrupoA() + provision.getMultaFGTS();
+        final BigDecimal subTotal = provision.getDecimo().add(ferias).add(provision.getAbFerias()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal totalProvisaoMensal = subTotal.add(provision.getIncGrupoA()).add(provision.getMultaFGTS()).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(totalProvisaoMensal, provision.getTotalProvisaoMensal());
     }
@@ -159,14 +232,20 @@ public class ProvisionTests {
     @Test
     public void setSetAbFeriasAbSubtotalTest() {
 
-        final double remuneracao = 800;
-        final double abFerias = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal abFerias = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setAbFerias(abFerias);
 
-        final double subTotal = provision.getDecimo() + provision.getFerias() + abFerias;
+        final BigDecimal subTotal = provision.getDecimo().add(provision.getFerias()).add(abFerias).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(subTotal, provision.getSubTotal());
     }
@@ -174,15 +253,21 @@ public class ProvisionTests {
     @Test
     public void setAbFeriasTotalMensalProvisaoTest() {
 
-        final double remuneracao = 800;
-        final double abFerias = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal abFerias = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setAbFerias(abFerias);
 
-        final double subTotal = provision.getDecimo() + provision.getFerias() + abFerias;
-        final double totalProvisaoMensal = subTotal + provision.getIncGrupoA() + provision.getMultaFGTS();
+        final BigDecimal subTotal = provision.getDecimo().add(provision.getFerias()).add(abFerias).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal totalProvisaoMensal = subTotal.add(provision.getIncGrupoA()).add(provision.getMultaFGTS()).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(totalProvisaoMensal, provision.getTotalProvisaoMensal());
     }
@@ -190,14 +275,20 @@ public class ProvisionTests {
     @Test
     public void setSetIncGrupoATotalProvisaoMensalTest() {
 
-        final double remuneracao = 800;
-        final double incGrupoA = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal incGrupoA = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setIncGrupoA(incGrupoA);
 
-        final double totalProvisaoMensal = provision.getSubTotal() + incGrupoA + provision.getMultaFGTS();
+        final BigDecimal totalProvisaoMensal = provision.getSubTotal().add(incGrupoA).add(provision.getMultaFGTS()).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(totalProvisaoMensal, provision.getTotalProvisaoMensal());
     }
@@ -205,14 +296,20 @@ public class ProvisionTests {
     @Test
     public void setMultaFGTSTest() {
 
-        final double remuneracao = 800;
-        final double multaFGTS = 100;
+        final BigDecimal remuneracao = new BigDecimal("800");
+        final BigDecimal multaFGTS = new BigDecimal("100");
 
-        Provision provision = new Provision(0.358);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
         provision.setRemuneracao(remuneracao);
         provision.setMultaFGTS(multaFGTS);
 
-        final double totalProvisaoMensal = provision.getSubTotal() + provision.getIncGrupoA() + multaFGTS;
+        final BigDecimal totalProvisaoMensal = provision.getSubTotal().add(provision.getIncGrupoA()).add(multaFGTS).setScale(SCALE, ROUNDING_MODE);
 
         assertEquals(totalProvisaoMensal, provision.getTotalProvisaoMensal());
     }

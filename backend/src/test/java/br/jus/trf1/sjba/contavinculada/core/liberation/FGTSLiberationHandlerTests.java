@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,7 +39,7 @@ public class FGTSLiberationHandlerTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContractLocalDate)
                 .criadoEm(fromLocalDate(dateContractLocalDate))
-                .remuneracao(6600.0d)
+                .remuneracao(new BigDecimal("6600.0"))
                 .cargo("ENGENHEIRO CIVIL carga horária 30h semanais")
                 .build();
 
@@ -47,7 +49,7 @@ public class FGTSLiberationHandlerTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContractAdictiveLocalDate)
                 .criadoEm(fromLocalDate(criadoEm)) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 1")
                 .build();
 
@@ -62,8 +64,8 @@ public class FGTSLiberationHandlerTests {
         LocalDate dateAditiveIncGrupA = LocalDate.of(2022, 6, 1);
 
         incGrupoAContratoes = new ArrayList<>();
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(37.8).data(dateAditiveIncGrupA).build()); //ordered by date desc
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(35.8).data(dateContractLocalDate).build());
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("37.8")).data(dateAditiveIncGrupA).build()); //ordered by date desc
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("35.8")).data(dateContractLocalDate).build());
 
         liberacao = new Liberacao();
         liberacao.setTipo(TipoLiberacao.DECIMO_TERCEIRO);
@@ -80,12 +82,21 @@ public class FGTSLiberationHandlerTests {
     @DisplayName("Should filter to have only FGTS values.")
     public void filterToFGTSTest() {
 
-        Provision provision = new Provision(0.358);
-        provision.setRemuneracao(6600);
-        final double expected = 230.34;
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(new BigDecimal("6600"));
+        final BigDecimal expected = new BigDecimal("230.34");
 
         fgtsLiberationHandler.filterToFGTS(provision);
-        final double result = Math.ceil(provision.getTotalProvisaoMensal() * 100.0d) / 100.0d;
+        final BigDecimal result = provision.getTotalProvisaoMensal()
+                .multiply(new BigDecimal("100"))
+                .setScale(0, RoundingMode.CEILING)
+                .divide(new BigDecimal("100"), 2, RoundingMode.HALF_EVEN);
         assertEquals(expected, result);
     }
 

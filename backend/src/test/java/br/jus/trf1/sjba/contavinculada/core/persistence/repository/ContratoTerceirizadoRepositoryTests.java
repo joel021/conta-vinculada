@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
@@ -72,10 +73,10 @@ public class ContratoTerceirizadoRepositoryTests {
                         .build()
         );
 
-        ContratoTerceirizado contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", 123.45333f,
+        ContratoTerceirizado contratoTerceirizado = new ContratoTerceirizado(1, funcionario, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, today, criador, Calendar.getInstance(), null, null, null, null);
 
-        ContratoTerceirizado contratoTerceirizadoDesligado = new ContratoTerceirizado(2, funcionario, contrato, "Cargo", 123.45333f,
+        ContratoTerceirizado contratoTerceirizadoDesligado = new ContratoTerceirizado(2, funcionario, contrato, "Cargo", new BigDecimal("123.45333"),
                 40, LocalDate.of(2021,1,1), criador, Calendar.getInstance(), null, null, null,
                 LocalDate.of(2022,1,1));
 
@@ -93,7 +94,7 @@ public class ContratoTerceirizadoRepositoryTests {
     public void saveTest() {
 
         ContratoTerceirizado contratoTerceirizado = new ContratoTerceirizado(null, funcionario, contrato, "Cargo",
-                123.45333f, 40, LocalDate.of(2021,2,2), criador, Calendar.getInstance(), null,
+                new BigDecimal("123.45333"), 40, LocalDate.of(2021,2,2), criador, Calendar.getInstance(), null,
                 null, null, null);
 
         ContratoTerceirizado contratoTerceirizadoCreated = contratoTerceirizadoRepository.save(contratoTerceirizado);
@@ -107,7 +108,7 @@ public class ContratoTerceirizadoRepositoryTests {
                 .funcionario(funcionario)
                 .contrato(contrato)
                 .cargo("Cargo")
-                .remuneracao(123.45333f)
+                .remuneracao(new BigDecimal("123.45333"))
                 .cargaHoraria(40)
                 .dataInicio(LocalDate.now())
                 .criadoPor(criador)
@@ -120,7 +121,7 @@ public class ContratoTerceirizadoRepositoryTests {
 
     @Test
     public void findTest() {
-        float remuneracao = 123.45333f;
+        BigDecimal remuneracao = new BigDecimal("123.45333");
         assertEquals(remuneracao, contratoTerceirizadoRepository.findById(1).get().getRemuneracao());
     }
 

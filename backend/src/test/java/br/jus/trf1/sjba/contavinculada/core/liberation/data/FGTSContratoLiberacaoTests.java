@@ -5,11 +5,13 @@ import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FGTSContratoLiberacaoTests {
 
@@ -27,8 +29,14 @@ public class FGTSContratoLiberacaoTests {
     @DisplayName("Check total provisions. Should be the total of provisions.")
     public void funcionarioProvisionsNonEmptyTest() {
 
-        Provision provision = new Provision(0.2);
-        provision.setRemuneracao(12000);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.2")
+        );
+        provision.setRemuneracao(new BigDecimal("12000"));
 
         FGTSProvision fgtsProvision = new FGTSProvision();
         fgtsProvision.addProvision(provision);
@@ -36,7 +44,7 @@ public class FGTSContratoLiberacaoTests {
         FGTSContratoLiberacao fgtsContratoLiberacao = new FGTSContratoLiberacao()
                 .funcionarioProvisions(List.of(fgtsProvision));
 
-        final double total = provision.getTotalProvisaoMensal();
+        final BigDecimal total = provision.getTotalProvisaoMensal();
 
         assertEquals(total, fgtsContratoLiberacao.getTotalProvision());
     }
@@ -45,8 +53,14 @@ public class FGTSContratoLiberacaoTests {
     @DisplayName("Check total of liberartions. Should be 0, since it is not liberated.")
     public void funcionarioProvisionsNotLiberatedTest() {
 
-        Provision provision = new Provision(0.2);
-        provision.setRemuneracao(12000);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.2")
+        );
+        provision.setRemuneracao(new BigDecimal("12000"));
 
         FGTSProvision fgtsProvision = new FGTSProvision();
         fgtsProvision.addProvision(provision);
@@ -61,8 +75,14 @@ public class FGTSContratoLiberacaoTests {
     @DisplayName("Check total provisions. Should be the total of provisions.")
     public void funcionarioProvisionsLiberatedTest() {
 
-        Provision provision = new Provision(0.2);
-        provision.setRemuneracao(12000);
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.2")
+        );
+        provision.setRemuneracao(new BigDecimal("12000"));
 
         FGTSProvision fgtsProvision = new FGTSProvision();
         fgtsProvision.addProvision(provision);
@@ -71,8 +91,8 @@ public class FGTSContratoLiberacaoTests {
         FGTSContratoLiberacao fgtsContratoLiberacao = new FGTSContratoLiberacao()
                 .funcionarioProvisions(List.of(fgtsProvision));
 
-        final double total = provision.getTotalProvisaoMensal();
-        assert total > 0;
+        final BigDecimal total = provision.getTotalProvisaoMensal();
+        assertTrue(total.compareTo(BigDecimal.ZERO) > 0);
         assertEquals(total, fgtsContratoLiberacao.getTotalLiberation());
     }
 

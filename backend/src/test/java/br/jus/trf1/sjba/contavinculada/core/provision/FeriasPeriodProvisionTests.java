@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
@@ -20,6 +22,9 @@ public class FeriasPeriodProvisionTests {
     private LocalDate twelveEndDate;
 
     private Liberacao liberation;
+
+    private static final int SCALE = 10;
+    private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
     @BeforeEach
     public void setup() {
@@ -35,7 +40,9 @@ public class FeriasPeriodProvisionTests {
         twelveEndDate = LocalDate.of(2022, 12, 16);
 
         for(int i = 1; i <= 12; i++) {
-            Provision provision = new Provision(0.34);
+            Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                    new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.34")
+            );
 
             LocalDate date = inicioVigencia.plusMonths(i);
 
@@ -49,7 +56,7 @@ public class FeriasPeriodProvisionTests {
                 provision.setCriadoEm(inicioVigencia);
             }
 
-            provision.setRemuneracao(1000);
+            provision.setRemuneracao(new BigDecimal("1000"));
             feriasProvisionWithTwoFullYear.addProvision(date, provision);
             feriasProvisionWithOneFullYear.addProvision(date, provision);
         }
@@ -74,8 +81,10 @@ public class FeriasPeriodProvisionTests {
 
         FeriasPeriodProvision feriasProvision = new FeriasPeriodProvision(List.of(liberation));
 
-        Provision provision = new Provision(0.34);
-        provision.setRemuneracao(1000);
+        Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.34")
+        );
+        provision.setRemuneracao(new BigDecimal("1000"));
         provision.setDate(LocalDate.now());
         provision.setInicioVigencia(LocalDate.now());
         provision.setCriadoEm(LocalDate.now());
@@ -90,8 +99,10 @@ public class FeriasPeriodProvisionTests {
     public void shouldCreateNewOneAfter12Test() {
 
         Calendar endDate = Calendar.getInstance();
-        Provision lastProvision = new Provision(0.35);
-        lastProvision.setRemuneracao(4000);
+        Provision lastProvision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.35")
+        );
+        lastProvision.setRemuneracao(new BigDecimal("4000"));
         lastProvision.setDate(LocalDate.now());
         lastProvision.setInicioVigencia(LocalDate.now());
         lastProvision.setCriadoEm(LocalDate.now());
@@ -106,8 +117,10 @@ public class FeriasPeriodProvisionTests {
     public void shouldNotCreateNewOneAfter12Test() {
 
         LocalDate date = LocalDate.of(2030, 2,1);
-        Provision lastProvision = new Provision(0.35);
-        lastProvision.setRemuneracao(4000);
+        Provision lastProvision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.35")
+        );
+        lastProvision.setRemuneracao(new BigDecimal("4000"));
         lastProvision.setDate(date);
         lastProvision.setInicioVigencia(date);
         lastProvision.setCriadoEm(date);
@@ -132,8 +145,10 @@ public class FeriasPeriodProvisionTests {
     public void shouldNotAddNewProvisionTest() {
 
         LocalDate date = LocalDate.of(2030,2,1);
-        Provision lastProvision = new Provision(0.35);
-        lastProvision.setRemuneracao(4000);
+        Provision lastProvision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.35")
+        );
+        lastProvision.setRemuneracao(new BigDecimal("4000"));
         lastProvision.setDate(date);
         lastProvision.setInicioVigencia(date);
         lastProvision.setCriadoEm(date);
@@ -152,7 +167,9 @@ public class FeriasPeriodProvisionTests {
     @Test
     public void alreadyInsertedTest() {
 
-        Provision provision = new Provision(0.35);
+        Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.35")
+        );
         LocalDate endDate = LocalDate.of(2023, 2, 1);
         provision.setDate(endDate);
         provision.setInicioVigencia(endDate);
@@ -170,7 +187,9 @@ public class FeriasPeriodProvisionTests {
     @Test
     public void alreadyInsertedAlreadyTest() {
 
-        Provision provision = new Provision(0.35);
+        Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.34")
+        );
         LocalDate endDate = LocalDate.of(2023,2, 1);
         provision.setDate(endDate);
         provision.setInicioVigencia(endDate);
@@ -187,7 +206,9 @@ public class FeriasPeriodProvisionTests {
     @Test
     public void alreadyInsertedNotTest() {
 
-        Provision provision = new Provision(0.35);
+        Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.34")
+        );
         LocalDate endDate = LocalDate.of(2023, 2, 1);
         provision.setDate(endDate);
         provision.setInicioVigencia(endDate);
@@ -207,15 +228,22 @@ public class FeriasPeriodProvisionTests {
 
         FeriasPeriodProvision feriasPeriodProvision = new FeriasPeriodProvision(List.of(liberation));
 
-        Provision provision = new Provision(35.8/100.0d);
-        provision.setRemuneracao(6600);
-        final double subTotal = provision.getFerias() + provision.getAbFerias();
-        final double expected = subTotal + subTotal * provision.getRATE_INC_GRUPO_A();
+        Provision provision = new Provision(
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"),
+                new BigDecimal("0.0349"),
+                new BigDecimal("0.358")
+        );
+        provision.setRemuneracao(new BigDecimal("6600"));
+
+        final BigDecimal subTotal = provision.getFerias().add(provision.getAbFerias()).setScale(SCALE, ROUNDING_MODE);
+        final BigDecimal expected = subTotal.add(subTotal.multiply(provision.getRATE_INC_GRUPO_A())).setScale(SCALE, ROUNDING_MODE);
 
         Provision provisionFiltered = feriasPeriodProvision.filterFerias(provision);
-        final double actual = provisionFiltered.getTotalProvisaoMensal();
+        final BigDecimal actual = provisionFiltered.getTotalProvisaoMensal().setScale(SCALE, ROUNDING_MODE);
 
-        assertEquals(expected, actual, "Expected:  1086.29, actual: "+actual);
+        assertEquals(expected, actual, "Expected: " + expected.toPlainString() + ", actual: " + actual.toPlainString());
     }
 
 
@@ -235,10 +263,12 @@ public class FeriasPeriodProvisionTests {
 
         FeriasPeriodProvision feriasPeriodProvision = new FeriasPeriodProvision(List.of(liberacao1, liberacao2));
 
-        Provision provision = new Provision(35.8/100.0d);
+        Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.358")
+        );
         provision.setDate(LocalDate.of(2021, 1, 1));
         provision.setInicioVigencia(LocalDate.of(2021,1,1));
-        provision.setRemuneracao(6600);
+        provision.setRemuneracao(new BigDecimal("6600"));
 
         feriasPeriodProvision.createNewFeriasProvision(provision);
         feriasPeriodProvision.createNewFeriasProvision(provision);
@@ -263,10 +293,12 @@ public class FeriasPeriodProvisionTests {
 
         FeriasPeriodProvision feriasPeriodProvision = new FeriasPeriodProvision(List.of(liberacao1, liberacao2));
 
-        Provision provision = new Provision(35.8/100.0d);
+        Provision provision = new Provision(new BigDecimal("0.0909"), new BigDecimal("0.0909"),
+                new BigDecimal("0.0303"), new BigDecimal("0.0349"), new BigDecimal("0.358")
+        );
         provision.setDate(LocalDate.of(2021, 2, 1));
         provision.setInicioVigencia(LocalDate.of(2021,1,1));
-        provision.setRemuneracao(6600);
+        provision.setRemuneracao(new BigDecimal("6600"));
 
         feriasPeriodProvision.createNewFeriasProvision(provision);
         feriasPeriodProvision.createNewFeriasProvision(provision);

@@ -5,6 +5,7 @@ import br.jus.trf1.sjba.contavinculada.core.provision.FeriasPeriodProvision;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -21,16 +22,16 @@ public class FeriasContratoLiberacao extends PeriodContratoProvisionLiberation {
 
     @Override
     public void calcTotalProvisionLiberation() {
-        totalProvision = 0;
-        totalLiberation = 0;
+        totalProvision = BigDecimal.ZERO;
+        totalLiberation = BigDecimal.ZERO;
 
         if (feriasPeriodProvisionList == null || feriasPeriodProvisionList.isEmpty()) {
             return;
         }
 
-        for (FeriasPeriodProvision feriasPeriodProvision: feriasPeriodProvisionList) {
-            totalProvision += feriasPeriodProvision.getTotalProvision();
-            totalLiberation += feriasPeriodProvision.getTotalLiberation();
+        for (FeriasPeriodProvision feriasPeriodProvision : feriasPeriodProvisionList) {
+            totalProvision = totalProvision.add(feriasPeriodProvision.getTotalProvision());
+            totalLiberation = totalLiberation.add(feriasPeriodProvision.getTotalLiberation());
         }
     }
 

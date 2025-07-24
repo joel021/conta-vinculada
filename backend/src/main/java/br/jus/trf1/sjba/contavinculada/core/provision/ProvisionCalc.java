@@ -6,6 +6,8 @@ import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 import br.jus.trf1.sjba.contavinculada.utils.DateUtils;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import static br.jus.trf1.sjba.contavinculada.utils.DateUtils.fromCalendar;
@@ -13,13 +15,13 @@ import static br.jus.trf1.sjba.contavinculada.utils.DateUtils.fromCalendar;
 @Getter
 public class ProvisionCalc {
 
-    private final double RATE_DECIMO = 0.0909d;
-    private final double RATE_FERIAS = 0.0909d;
-    private final double RATE_AB_FERIAS = 0.0303d;
-    private final double RATE_MULTA_FGTS = 0.0349d;
-    private final double PER_INC_GRUPO_A;
+    private final BigDecimal RATE_DECIMO = new BigDecimal("0.0909");
+    private final BigDecimal RATE_FERIAS = new BigDecimal("0.0909");
+    private final BigDecimal RATE_AB_FERIAS = new BigDecimal("0.0303");
+    private final BigDecimal RATE_MULTA_FGTS = new BigDecimal("0.0349");
+    private final BigDecimal PER_INC_GRUPO_A;
 
-    public ProvisionCalc(double perIncGrupoA) {
+    public ProvisionCalc(BigDecimal perIncGrupoA) {
         PER_INC_GRUPO_A = perIncGrupoA;
     }
 
@@ -39,8 +41,13 @@ public class ProvisionCalc {
     }
 
     public Provision fromContratoTerceirizado(ContratoTerceirizado contratoTerceirizado, LocalDate endDate) {
-
-        final Provision provision = new Provision(PER_INC_GRUPO_A / 100.0d);
+        BigDecimal rateIncGrupoA = PER_INC_GRUPO_A.divide(
+                BigDecimal.valueOf(100.0),
+                10,
+                RoundingMode.HALF_UP
+        );
+        final Provision provision = new Provision(RATE_DECIMO, RATE_FERIAS, RATE_AB_FERIAS,
+                RATE_MULTA_FGTS, rateIncGrupoA);
 
         provision.setDate(endDate);
         provision.setCargo(contratoTerceirizado.getCargo());
@@ -49,11 +56,11 @@ public class ProvisionCalc {
         provision.setCriadoEm(fromCalendar(contratoTerceirizado.getCriadoEm()));
 
         if (!canCal(contratoTerceirizado.getDataInicio(), endDate)) {
-            provision.setFerias(0);
-            provision.setDecimo(0);
-            provision.setMultaFGTS(0);
-            provision.setAbFerias(0);
-            provision.setIncGrupoA(0);
+            provision.setFerias(new BigDecimal("0"));
+            provision.setDecimo(new BigDecimal("0"));
+            provision.setMultaFGTS(new BigDecimal("0"));
+            provision.setAbFerias(new BigDecimal("0"));
+            provision.setIncGrupoA(new BigDecimal("0"));
         }
 
         return provision;

@@ -9,6 +9,8 @@ import br.jus.trf1.sjba.contavinculada.exception.NotAcceptableException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class FuncionarioProvisionMapperTests {
                 .funcionario(funcionario)
                 .dataInicio(dateContract)
                 .criadoEm(fromLocalDate(dateContract))
-                .remuneracao(10_000)
+                .remuneracao(new BigDecimal("10.000"))
                 .cargo("Cargo 0")
                 .build();
 
@@ -46,7 +48,7 @@ public class FuncionarioProvisionMapperTests {
                 .funcionario(funcionario)
                 .dataInicio(dateAditive)
                 .criadoEm(fromLocalDate(dateAditive.plusMonths(2))) //Suppose the employee who controls discovered the change 2 months after
-                .remuneracao(11_000)
+                .remuneracao(new BigDecimal("11.000"))
                 .cargo("Cargo 1")
                 .build();
 
@@ -56,8 +58,8 @@ public class FuncionarioProvisionMapperTests {
         List<IncGrupoAContrato> incGrupoAContratoes = new ArrayList<>();
         dateAditiveIncGrupA = LocalDate.of(2024, 1, 1).plusMonths(4);
 
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(36.5).data(dateAditiveIncGrupA).build()); //ordered by date desc
-        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(34.5).data(dateContract).build());
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("36.5")).data(dateAditiveIncGrupA).build()); //ordered by date desc
+        incGrupoAContratoes.add(IncGrupoAContrato.builder().incGrupoA(new BigDecimal("34.5")).data(dateContract).build());
 
         funcionarioProvisionMapper = new FuncionarioProvisionMapper(contratoTerceirizadoList, incGrupoAContratoes);
 
@@ -92,7 +94,7 @@ public class FuncionarioProvisionMapperTests {
         List<FuncionarioProvision> provisionList = funcionarioProvisionMapper.allFuncionarioToSpecificPeriod(dateContract);
         FuncionarioProvision firstProvision = provisionList.get(0);
 
-        double expectedTotalProvisionadoMensal = new ProvisionCalc(34.5)
+        BigDecimal expectedTotalProvisionadoMensal = new ProvisionCalc(new BigDecimal("34.5"))
                 .fromContratoTerceirizado(contratoTerceirizado, dateContract)
                 .getTotalProvisaoMensal();
 
@@ -105,13 +107,13 @@ public class FuncionarioProvisionMapperTests {
         List<FuncionarioProvision> provisionList = funcionarioProvisionMapper.allFuncionarioToSpecificPeriod(dateAditive);
         FuncionarioProvision firstProvision = provisionList.get(0);
 
-        double expectedTotalProvisionadoMensal = new ProvisionCalc(34.5)
+        BigDecimal expectedTotalProvisionadoMensal = new ProvisionCalc(new BigDecimal("34.5"))
                 .fromContratoTerceirizado(contratoTerceirizadoAditivo,  dateAditive)
                 .getTotalProvisaoMensal();
-        expectedTotalProvisionadoMensal = Math.floor(expectedTotalProvisionadoMensal * 100)/100;
+        expectedTotalProvisionadoMensal = expectedTotalProvisionadoMensal.setScale(2, RoundingMode.FLOOR);
 
-        double currentTotalProvisionadoMensal = ((Provision) firstProvision.getProvisoes().toArray()[0]).getTotalProvisaoMensal();
-        assertEquals(expectedTotalProvisionadoMensal, Math.floor(currentTotalProvisionadoMensal * 100)/100);
+        BigDecimal currentTotalProvisionadoMensal = ((Provision) firstProvision.getProvisoes().toArray()[0]).getTotalProvisaoMensal();
+        assertEquals(expectedTotalProvisionadoMensal, currentTotalProvisionadoMensal.setScale(2, RoundingMode.FLOOR));
     }
 
     @Test
@@ -121,7 +123,7 @@ public class FuncionarioProvisionMapperTests {
         List<FuncionarioProvision> provisionList = funcionarioProvisionMapper.allFuncionarioToSpecificPeriod(period);
         FuncionarioProvision firstProvision = provisionList.get(0);
 
-        double expectedTotalProvisionadoMensal = new ProvisionCalc(36.5)
+        BigDecimal expectedTotalProvisionadoMensal = new ProvisionCalc(new BigDecimal("36.5"))
                 .fromContratoTerceirizado(contratoTerceirizadoAditivo, period)
                 .getTotalProvisaoMensal();
 

@@ -4,6 +4,7 @@ import br.jus.trf1.sjba.contavinculada.core.persistence.model.Liberacao;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.FeriasProvision;
 import br.jus.trf1.sjba.contavinculada.core.provision.data.Provision;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -25,16 +26,16 @@ public class FeriasPeriodProvision extends FuncionarioPeriodProvision {
     @Override
     public void updateTotalProvisionsAndLiberations() {
 
-        totalLiberation = 0;
-        totalProvision = 0;
+        totalLiberation = BigDecimal.ZERO;
+        totalProvision = BigDecimal.ZERO;
 
         if (feriasProvisionList == null) {
             return;
         }
 
-        for (FeriasProvision feriasProvision: feriasProvisionList) {
-            totalLiberation += feriasProvision.getTotalLiberation();
-            totalProvision += feriasProvision.getTotalProvision();
+        for (FeriasProvision feriasProvision : feriasProvisionList) {
+            totalLiberation = totalLiberation.add(feriasProvision.getTotalLiberation());
+            totalProvision = totalProvision.add(feriasProvision.getTotalProvision());
         }
     }
 
@@ -93,8 +94,8 @@ public class FeriasPeriodProvision extends FuncionarioPeriodProvision {
 
     public Provision filterFerias(Provision provision) {
 
-        provision.setDecimo(0);
-        provision.setMultaFGTS(0);
+        provision.setDecimo(new BigDecimal("0"));
+        provision.setMultaFGTS(new BigDecimal("0"));
 
         return provision;
     }
