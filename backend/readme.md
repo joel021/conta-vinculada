@@ -1,6 +1,6 @@
 # contas-vinculadas-back
 
-### 🛠️ Development Guidelines
+# 🛠️ Development Guidelines
 
 This section outlines the recommended approach for maintaining and extending this project. Please follow these practices to ensure consistency and efficiency in development and testing.
 
@@ -45,9 +45,27 @@ This section outlines the recommended approach for maintaining and extending thi
       `backend/src/main/java/br/jus/trf1/sjba/contavinculada/security/WebSecurityConfig.java`
       for details on how to set up access properly.
 
+# Dependencies
+
+- Postgress SQL or MYSQL
 
 
-<h1>Deploy</h1>
+# Quick running with different profiles
+
+To run without configuring the deployment environment, 
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=test
+```
+
+The prod profile should be used only when deploying the system.
+
+
+# Deploy
 
 On root project level, where are the pom.xml file, run, for generate the jar:
 ```

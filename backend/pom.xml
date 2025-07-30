@@ -42,9 +42,9 @@
 
 			<dependencies>
 				<dependency>
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-					<version>8.0.33</version>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
+					<version>42.7.7</version>
 				</dependency>
 				<dependency>
 					<groupId>org.flywaydb</groupId>
@@ -67,9 +67,9 @@
 
 			<dependencies>
 				<dependency>
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-					<version>8.0.33</version>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
+					<version>42.7.7</version>
 				</dependency>
 				<dependency>
 					<groupId>org.flywaydb</groupId>
@@ -78,7 +78,8 @@
 
 				<dependency>
 					<groupId>org.flywaydb</groupId>
-					<artifactId>flyway-mysql</artifactId>
+					<artifactId>flyway-database-postgresql</artifactId>
+					<version>11.10.4</version>
 				</dependency>
 			</dependencies>
 		</profile>
