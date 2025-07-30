@@ -22,7 +22,7 @@ public class FGTSContratoLiberacaoTests {
         FGTSContratoLiberacao fgtsContratoLiberacao = new FGTSContratoLiberacao()
                 .funcionarioProvisions(new ArrayList<>());
         fgtsContratoLiberacao.setFuncionarioProvisions(new ArrayList<>());
-        assertEquals(0, fgtsContratoLiberacao.getTotalProvision());
+        assertTrue(BigDecimal.ZERO.compareTo(fgtsContratoLiberacao.getTotalProvision()) == 0);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class FGTSContratoLiberacaoTests {
         FGTSContratoLiberacao fgtsContratoLiberacao = new FGTSContratoLiberacao()
                 .funcionarioProvisions(List.of(fgtsProvision));
 
-        assertEquals(0, fgtsContratoLiberacao.getTotalLiberation());
+        assertTrue(BigDecimal.ZERO.compareTo(fgtsContratoLiberacao.getTotalLiberation()) == 0);
     }
 
     @Test

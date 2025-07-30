@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.validation.FieldError;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static br.jus.trf1.sjba.contavinculada.utils.Reflection.eligibleClass;
@@ -116,45 +117,57 @@ public class Validator {
     }
 
     public boolean outOfMax(Object field, int limit) {
+        if (field == null) {
+            return false;
+        }
 
         if (field instanceof Integer) {
-            return ((int) field) > limit;
+            return (Integer) field > limit;
 
         } else if (field instanceof Float) {
-            return ((float) field) > limit;
+            return (Float) field > limit;
 
-        } else if (field instanceof  Double) {
-            return ((double) field) > limit;
+        } else if (field instanceof Double) {
+            return (Double) field > limit;
 
-        } else if (field instanceof Collection) {
-            return ((Collection<?>) field).size() > limit;
-
-        } else if (field.getClass().isArray()) {
-            return ((Object[]) field).length > limit;
+        } else if (field instanceof BigDecimal) {
+            return ((BigDecimal) field).compareTo(BigDecimal.valueOf(limit)) > 0;
 
         } else if (field instanceof String) {
             return ((String) field).length() > limit;
+
+        } else if (field instanceof Collection<?>) {
+            return ((Collection<?>) field).size() > limit;
+
+        } else if (field.getClass().isArray()) {
+            return java.lang.reflect.Array.getLength(field) > limit;
         }
 
         return false;
     }
 
     public boolean outOfMin(Object field, int limit) {
+        if (field == null) {
+            return false;
+        }
 
         if (field instanceof Integer) {
-            return ((int) field) < limit;
+            return (Integer) field < limit;
 
         } else if (field instanceof Float) {
-            return ((float) field) < limit;
+            return (Float) field < limit;
 
-        } else if (field instanceof  Double) {
-            return ((double) field) < limit;
+        } else if (field instanceof Double) {
+            return (Double) field < limit;
 
-        } else if (field instanceof Collection) {
+        } else if (field instanceof BigDecimal) {
+            return ((BigDecimal) field).compareTo(BigDecimal.valueOf(limit)) < 0;
+
+        } else if (field instanceof Collection<?>) {
             return ((Collection<?>) field).size() < limit;
 
         } else if (field.getClass().isArray()) {
-            return ((Object[]) field).length < limit;
+            return java.lang.reflect.Array.getLength(field) < limit;
 
         } else if (field instanceof String) {
             return ((String) field).length() < limit;
@@ -162,5 +175,6 @@ public class Validator {
 
         return false;
     }
+
 
 }

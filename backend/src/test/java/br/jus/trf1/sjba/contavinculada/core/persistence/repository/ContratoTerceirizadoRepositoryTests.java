@@ -122,7 +122,7 @@ public class ContratoTerceirizadoRepositoryTests {
     @Test
     public void findTest() {
         BigDecimal remuneracao = new BigDecimal("123.45333");
-        assertEquals(remuneracao, contratoTerceirizadoRepository.findById(1).get().getRemuneracao());
+        assertTrue(remuneracao.compareTo(contratoTerceirizadoRepository.findById(1).get().getRemuneracao()) == 0);
     }
 
     @Test

@@ -60,7 +60,8 @@ public class IncGrupoAContratoRepositoryTests {
 
     @Test
     public void findTest() {
-        assertEquals(93.3333337d, incGrupoAContratoRepository.findById(incGrupoAContrato.getId()).get().getIncGrupoA());
+        BigDecimal expected = new BigDecimal("93.3333337");
+        assertTrue(expected.compareTo(incGrupoAContratoRepository.findById(incGrupoAContrato.getId()).get().getIncGrupoA()) == 0);
     }
 
     @Test

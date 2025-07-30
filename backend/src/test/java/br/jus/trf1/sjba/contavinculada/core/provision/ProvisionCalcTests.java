@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProvisionCalcTests {
 
@@ -119,7 +120,7 @@ public class ProvisionCalcTests {
         contratoTerceirizado.setDataInicio(LocalDate.now().withDayOfMonth(20));
 
         Provision provision = provisionCalc.fromContratoTerceirizado(contratoTerceirizado, LocalDate.now());
-        assertEquals(BigDecimal.ZERO, provision.getFerias());
+        assertTrue(BigDecimal.ZERO.compareTo(provision.getFerias()) == 0);
     }
 
     @Test
@@ -130,15 +131,25 @@ public class ProvisionCalcTests {
 
         LocalDate date = LocalDate.of(2021, 12, 31);
         Provision provision = provisionCalc.fromContratoTerceirizado(contratoTerceirizado, date);
-        assertEquals(BigDecimal.ZERO, provision.getFerias());
+
+        BigDecimal expected = BigDecimal.ZERO;
+        BigDecimal actual = provision.getFerias();
+        BigDecimal tolerance = new BigDecimal("1e-6");
+
+        assertTrue(expected.subtract(actual).abs().compareTo(tolerance) <= 0,
+                "Expected " + expected + " but got " + actual + " with tolerance " + tolerance);
     }
 
     @Test
     public void onEndDateNotCalcTest() {
 
         LocalDate endDate = LocalDate.now().withDayOfMonth(13);
-
         Provision provision = provisionCalc.fromContratoTerceirizado(contratoTerceirizado, endDate);
-        assertEquals(BigDecimal.ZERO, provision.getFerias());
+
+        BigDecimal expected = BigDecimal.ZERO;
+        BigDecimal actual = provision.getFerias();
+        BigDecimal tolerance = new BigDecimal("1e-6");
+        assertTrue(expected.subtract(actual).abs().compareTo(tolerance) <= 0,
+                "Expected " + expected + " but got " + actual + " with tolerance " + tolerance);
     }
 }

@@ -15,7 +15,7 @@ public class FeriasProvision extends Provisions {
     private WorkPeriod workPeriod;
     private LocalDate dataLiberacao;
     private LocalDate endDate;
-    private BigDecimal totalLiberation;
+    private BigDecimal totalLiberation = BigDecimal.ZERO;
     private OficioMovimentacao oficioMovimentacao;
 
     public void addProvision(Provision provision) {

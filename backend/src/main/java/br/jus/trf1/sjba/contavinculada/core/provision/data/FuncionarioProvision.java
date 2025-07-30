@@ -16,7 +16,7 @@ public class FuncionarioProvision extends Provisions {
     private WorkPeriod workPeriod;
     private LocalDate dataLiberacao;
     private Funcionario funcionario;
-    private BigDecimal totalLiberation;
+    private BigDecimal totalLiberation = BigDecimal.ZERO;
     private OficioMovimentacao oficioMovimentacao;
 
     public void setDataLiberacao(LocalDate dataLiberacao) {

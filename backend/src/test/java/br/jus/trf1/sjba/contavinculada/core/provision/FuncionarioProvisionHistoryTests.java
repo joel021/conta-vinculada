@@ -17,6 +17,7 @@ import java.util.List;
 
 import static br.jus.trf1.sjba.contavinculada.utils.DateUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FuncionarioProvisionHistoryTests {
 
@@ -69,16 +70,16 @@ public class FuncionarioProvisionHistoryTests {
     public void getProvisaoCalcBeforeAditiveTest() {
 
         ProvisionCalc provisionCalc = funcionarioProvisionHistory.getProvisaoCalc(dateContract);
-        double expectdPerIncGrupoA = 34.5;
-        assertEquals(expectdPerIncGrupoA, provisionCalc.getPER_INC_GRUPO_A());
+        BigDecimal expectdPerIncGrupoA = new BigDecimal("34.5");
+        assertTrue(expectdPerIncGrupoA.compareTo(provisionCalc.getPER_INC_GRUPO_A()) == 0);
     }
 
     @Test
     public void getProvisaoCalcAfterAditiveTest() {
 
         ProvisionCalc provisionCalc = funcionarioProvisionHistory.getProvisaoCalc(dateAditiveIncGrupA);
-        double expectdPerIncGrupoA = 36.5;
-        assertEquals(expectdPerIncGrupoA, provisionCalc.getPER_INC_GRUPO_A());
+        BigDecimal expectdPerIncGrupoA = new BigDecimal("36.5");
+        assertTrue(expectdPerIncGrupoA.compareTo(provisionCalc.getPER_INC_GRUPO_A()) == 0);
     }
 
     @Test

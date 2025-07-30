@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DecimoContratoLiberacaoTests {
 
@@ -82,6 +83,7 @@ public class DecimoContratoLiberacaoTests {
         DecimoContratoLiberacao decimoContratoLiberacao = new DecimoContratoLiberacao();
         decimoContratoLiberacao.funcionarioProvisions(List.of(decimoTerceiroPeriodProvision));
 
-        assertEquals(0, decimoContratoLiberacao.getTotalLiberation());
+        BigDecimal expected = BigDecimal.ZERO;
+        assertTrue(expected.compareTo(decimoContratoLiberacao.getTotalLiberation()) == 0);
     }
 }

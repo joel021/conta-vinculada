@@ -72,7 +72,12 @@ public class Provision {
     }
 
     public void setRemuneracao(BigDecimal remuneracao) {
-        this.remuneracao = remuneracao.setScale(SCALE, ROUNDING);
+        if (remuneracao == null) {
+            this.remuneracao = BigDecimal.ZERO;
+        } else {
+            this.remuneracao = remuneracao.setScale(SCALE, ROUNDING);
+        }
+
         this.remuneracaoChanged();
     }
 
