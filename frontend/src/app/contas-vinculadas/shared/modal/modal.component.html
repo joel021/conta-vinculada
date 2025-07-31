@@ -2,17 +2,45 @@
   (click)="openModal(template)">{{buttonTitle}}</button>
 
 <ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    {{body}}
-  </div>
-  <div class="modal-footer">
-    <button id="modal_no_button_id_{{id}}" type="button" (click)="noClick()" class="btn btn-light">{{noButton}}</button>
-    <button id="modal_yes_button_id_{{id}}" type="button" (click)="yesClick()" class="btn btn-primary">{{yesButton}}</button>
-  </div>
+  <form [formGroup]="form">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{title}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      {{body}}
+      <label *ngIf="body.includes('Tem certeza que deseja desligar o funcionário ')" for="dataDesligamento">Informe a
+        data de desligamento:
+        <input type="date" class="form-control" formControlName="dataDesligamento" id="dataDesligamento"
+          name="dataDesligamento" placeholder="Informe a data de desligamento"></label>
+      <input *ngIf="body.includes('Tem certeza que deseja realizar a liberação?')" type="text" class="form-control"
+        formControlName="docSEI" placeholder="Informe docSEI">
+      <input *ngIf="body.includes('Tem certeza que deseja realizar a liberação?')" type="text" class="form-control"
+        formControlName="numeroOficio" placeholder="Informe número do ofício">
+      <input *ngIf="body.includes('Tem certeza que deseja realizar a liberação?')" type="text" class="form-control"
+        formControlName="anoOficio" placeholder="Informe ano do ofício">
+      <label *ngIf="body.includes('Tem certeza que deseja realizar a liberação?')" for="dataLiberacao">Informe a
+        data da liberação:
+        <input type="date" class="form-control" formControlName="dataLiberacao" id="dataLiberacao"
+          name="dataLiberacao" placeholder="Informe a data da liberação"></label>
+    </div>
+    <div class="modal-footer">
+      <button id="modal_no_button_id_{{id}}" type="button" (click)="noClick()"
+        class="btn btn-light">{{noButton}}</button>
+      <button *ngIf="body.includes('Tem certeza que deseja realizar a liberação?')" id="modal_yes_button_id_{{id}}"
+        type="button"
+        [disabled]="form.controls['docSEI'].invalid || form.controls['numeroOficio'].invalid || form.controls['anoOficio'].invalid || form.controls['dataLiberacao'].invalid"
+        (click)="yesClick()" class="btn btn-primary">{{yesButton}}</button>
+      <button *ngIf="body.includes('Tem certeza que deseja desligar o funcionário ')" id="modal_yes_button_id_{{id}}"
+        type="button" [disabled]="form.controls['dataDesligamento'].invalid" (click)="yesClick()"
+        class="btn btn-primary">{{yesButton}}</button>
+      <button
+        *ngIf="!body.includes('Tem certeza que deseja realizar a liberação?') && !body.includes('Tem certeza que deseja desligar o funcionário ')"
+        id="modal_yes_button_id_{{id}}" type="button" (click)="yesClick()"
+        class="btn btn-primary">{{yesButton}}</button>
+
+    </div>
+  </form>
 </ng-template>

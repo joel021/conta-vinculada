@@ -16,6 +16,19 @@ getContrato(empresa: string): Observable<any> {
       `${environment.apiUrl}/contrato/?nomePessoaJuridica=${empresa}`
     )
   }
+
+  getIncGrupA(idContrato: any): Observable<any> {
+    return this.http.get<any>(
+       `${environment.apiUrl}/inc_grupo_a_contrato/contrato/${idContrato}`
+     )
+   }
+
+   adicionarIncGrupA(dadosIncGrupoA: any) {
+    return this.http.post<any>(
+      `${environment.apiUrl}/inc_grupo_a_contrato/`,
+      dadosIncGrupoA
+    );
+  }
 }
   
 

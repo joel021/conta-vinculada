@@ -1,0 +1,48 @@
+table td{
+    border:none !important;
+} 
+
+.inputtipo{ 
+  width: 150px;  
+}
+
+.inputtipo2{ 
+  width: 278px;  
+}
+
+.inputtipo3{ 
+  width: 185px;  
+}
+
+
+/*.inline {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px; 
+}*/ 
+
+.inline-container {
+  display: flex;
+  align-items: center;
+}
+
+.inline {
+  margin-right: 10px; 
+}
+
+.checkLiberado{
+  background: darkgreen;
+  display: inline-flex;
+
+}
+
+.inline-container{
+  display: inline-block;
+  align-items: center;
+}
+
+
+
+
+
+

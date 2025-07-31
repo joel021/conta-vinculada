@@ -53,8 +53,10 @@
                                 <td>{{user.email}}</td>
                                 <td>
                                     <select id="papeis_{{i}}" (change)="changed(i)"
-                                        value="{{user.papeis[0]}}" class="form-select">
+                                        value="{{user.papeis[user.papeis?.length-1]}}" class="form-select">
                                         <option value="ROLE_GUEST">Usuário comum</option>
+                                        <option value="ROLE_MANAGER">Gerenciador de conta vinculada</option>
+                                        <option value="ROLE_EXECUTOR">Executor</option>
                                         <option value="ROLE_ADMIN">Administrador</option>
                                     </select>
                                 </td>

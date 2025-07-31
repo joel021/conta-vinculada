@@ -8,6 +8,8 @@ import { UserRegisterComponent } from './contas-vinculadas/user-register/user-re
 import { UserAuthorizationComponent } from './contas-vinculadas/user-authorization/user-authorization.component';
 import { HistoricoLiberacaoComponent } from './contas-vinculadas/historico-liberacao/historico-liberacao.component';
 import { HistoricoProvisaoComponent } from './contas-vinculadas/historico-provisao/historico-provisao.component';
+import { IncGrupoAComponent } from './contas-vinculadas/inc-grupo-a/inc-grupo-a.component';
+import { CadastroFuncionarioComponent } from './contas-vinculadas/cadastro-funcionario/cadastro-funcionario.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -15,10 +17,12 @@ const routes: Routes = [
   { path: 'user-register', component: UserRegisterComponent},
   { path: 'listar-funcionarios/:idContrato', component: ListarFuncionariosComponent },
   { path: 'contratos', component: ContratosComponent },
-  { path: 'liberacao/:idContrato', component: LiberacaoComponent },
+  { path: 'liberacao/:idContrato/:idContratoTercerizado', component: LiberacaoComponent },
   { path: 'user-authorization', component: UserAuthorizationComponent},
   { path: 'historicoLiberacao/:idContrato', component: HistoricoLiberacaoComponent },
-  { path: 'historicoprovisao/:idContrato', component: HistoricoProvisaoComponent }
+  { path: 'historicoprovisao/:idContrato', component: HistoricoProvisaoComponent },
+  { path: 'inc-grupo-a/:idContrato', component: IncGrupoAComponent },
+  { path: 'cadastro-funcionario/:idContrato', component: CadastroFuncionarioComponent }
 ];
 
 @NgModule({

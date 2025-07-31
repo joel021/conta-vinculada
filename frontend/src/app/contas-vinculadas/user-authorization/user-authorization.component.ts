@@ -52,26 +52,26 @@ export class UserAuthorizationComponent implements OnInit, ModalCallback {
 
   updateUser(i:number) {
 
-    this.users[i].loading = true
+    const p = i;
+    this.users[p].loading = true
     this.message = ''
     this.errorMessage = ''
     
     const userUpdated = new Usuario()
-    userUpdated.usuario = this.users[i].usuario
-    userUpdated.email = this.users[i].email
-    userUpdated.nome = this.users[i].name
-    userUpdated.enabled = JSON.parse((<HTMLInputElement>document.getElementById("enabled_"+i)).value)
-    userUpdated.papeis = [(<HTMLInputElement>document.getElementById("papeis_"+i)).value]
+    userUpdated.usuario = this.users[p].usuario
+    userUpdated.email = this.users[p].email
+    userUpdated.nome = this.users[p].name
+    userUpdated.enabled = JSON.parse((<HTMLInputElement>document.getElementById("enabled_"+p)).value)
+    userUpdated.papeis = [(<HTMLInputElement>document.getElementById("papeis_"+p)).value]
     
     this.userService.updateAuthorization(userUpdated).subscribe({
       next: (resp) => {
-        this.message = 'O usuário '+this.users[i].nome + ' matrícula '+this.users[i].usuario+" foi atualizado com sucesso."
+        this.message = 'O usuário '+this.users[p].nome + ' matrícula '+this.users[p].usuario+" foi atualizado com sucesso."
         this.users[i] = userUpdated
       },
       error: (error) => {
-        console.log(error)
-        this.users[i].loading = false
-        this.errorMessage = "Não foi possível atualizar o usuário " + this.users[i].nome + " matrícula "+this.users[i]
+        this.users[p].loading = false
+        this.errorMessage = "Não foi possível atualizar o usuário " + this.users[p].nome + " matrícula "+this.users[p]
           + ". "+error.error.error
         this.handleUnauthorized(error)
       }

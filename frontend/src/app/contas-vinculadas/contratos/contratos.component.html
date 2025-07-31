@@ -66,8 +66,11 @@
                         <td>{{ contrato.fimVigencia | date:'dd/MM/yyyy' }}</td>
                         <td>{{ contrato.status }}</td>
                         <td>
-                            <button id="btnVContratoId" class="btn btn-primary" (click)="visualizarContrato(contrato.idContrato)"
+                            <button id="btnVContratoId" class="btn btn-primary btn-sm mx-1" (click)="visualizarContrato(contrato.idContrato)"
                                 type="button">Visualizar empregados</button>
+                            <button id="btnAdicionarFuncionarioId" class="btn btn-primary btn-sm mx-1" type="button"
+                                (click)="adicionarFuncionario(contrato.idContrato)">Adicionar
+                                funcionário</button>
                         </td>
                     </tr>   
                 </tbody>

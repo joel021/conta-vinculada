@@ -12,7 +12,15 @@
 .cabecalho{
    
     font-weight: bold;
+    
 } 
+
+.inline-container{
+  display: inline-block;
+  align-items: center;
+}
+
+
 
 /* .modif:hover {
     background-color: #027333;

@@ -3,8 +3,9 @@ import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 import { UserService } from 'src/app/service/user.service'
-import { UsuarioUpdate } from 'src/app/model/user.update.model'
 import { Usuario } from 'src/app/model/user.model'
+import { Unidade } from 'src/app/model/unidade.model'
+import { SecaoJudiciaria } from 'src/app/model/secaoJudiciaria.models'
 
 @Component({
   selector: 'app-user-register',
@@ -29,6 +30,10 @@ export class UserRegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(250)]],
       email: ['', [Validators.required, Validators.email]],
+      nomeSecao: ['', [Validators.required]],
+      cnpjSecao: ['', [Validators.required,Validators.minLength(11), Validators.maxLength(14)]],
+      siglaUnidade: ['', [Validators.required]],
+      nomeUnidade: ['', [Validators.required]],
     })
 
     this.title.setTitle("Registro de informações")
@@ -64,15 +69,39 @@ export class UserRegisterComponent implements OnInit {
     if (this.currentUser.email != '') {
       this.registerForm = this.formBuilder.group({
         nome: this.currentUser.nome,
-        email: this.currentUser.email
+        email: this.currentUser.email,
+        nomeSecao: this.currentUser.unidade?.secaoJudiciaria?.nome,
+        cnpjSecao: this.currentUser.unidade?.secaoJudiciaria?.cnpjSecao,
+        siglaUnidade: this.currentUser.unidade?.siglaUnidade,
+        nomeUnidade: this.currentUser.unidade?.nomeUnidade
       })
     }
   }
 
+  buildUserFromForm(): Usuario {
+
+    const secaoJudiciaria = new SecaoJudiciaria();
+    secaoJudiciaria.nome = this.controls['nomeSecao'].value
+    secaoJudiciaria.cnpjSecao = this.controls['cnpjSecao'].value
+    
+    const unidade = new Unidade()
+    unidade.secaoJudiciaria = secaoJudiciaria
+    unidade.siglaUnidade = this.controls['siglaUnidade'].value
+    unidade.nomeUnidade = this.controls['nomeUnidade'].value
+
+    const userUpdated = new Usuario();
+    userUpdated.nome = this.controls['nome'].value;
+    userUpdated.email = this.controls['email'].value
+    userUpdated.unidade = unidade
+
+    return userUpdated
+  }
+
   updateAuthenticated() {
 
+  
     this.authenticationService
-      .updateAuthenticated(this.controls['nome'].value, this.controls['email'].value)
+      .updateAuthenticated(this.buildUserFromForm())
       .subscribe({
         next: (resp) => {
           this.authenticationService.saveUserInSession(resp.userDetails)
@@ -91,13 +120,12 @@ export class UserRegisterComponent implements OnInit {
 
   updateNonAuthenticated() {
 
-    const userDetails = new UsuarioUpdate()
-
+    const userDetails = this.buildUserFromForm();
     userDetails.usuario = this.currentUser.usuario
-    userDetails.nome = this.controls['nome'].value
-    userDetails.email = this.controls['email'].value
     userDetails.senha = (<HTMLInputElement>document.getElementById("passwordId")).value
     userDetails.papeis = this.currentUser.papeis
+    userDetails.dominio = this.currentUser.dominio
+    userDetails!.unidade!.secaoJudiciaria!.sigla = (this.currentUser.dominio+"").replace("JFBA", "SJBA")
 
     this.authenticationService
       .updateNonAuthenticated("username", userDetails)

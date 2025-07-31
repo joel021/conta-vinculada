@@ -2,4 +2,15 @@ table td{
     border:none !important;
   }
 
+  .texto-vermelho {
+    color: red;
+    font-weight: normal; 
+}
+
+
+
+.btn-custom {
+  font-size: 11px; 
+  height: 30px; 
+}
 

@@ -21,7 +21,6 @@ export class HttpClientService {
 
    getDadosContrato(idContrato: any):Observable<any> {
     return this.http.get(`${this.apiUrl}/contrato/${idContrato}`);
-  
   }
 
   
@@ -33,15 +32,21 @@ export class HttpClientService {
   }
 
   /* 15122023 */ 
-  save(novaLiberacao: IliberacaoModel) { 
-    return this.http.post<IliberacaoModel>(`${this.apiUrl}/liberacao/teste`, novaLiberacao);
+  save(novaLiberacao: any) { 
+    return this.http.post<IliberacaoModel>(`${this.apiUrl}/liberacao/`, novaLiberacao);
   }
 
 
-  buscarHistoricoLiberacao(idContrato: any):Observable<any> {
-    return this.http.get(`${this.apiUrl}/contrato/${idContrato}`);
-  
-  }
+  buscarLiberacaoFERIAS(idContrato: any , fechamento: any):Observable<any> {
+    return this.http.get(`${this.apiUrl}/liberacao/FERIAS/${idContrato}?fechamento=${fechamento}`);
+    }
+
+  buscarLiberacaoFGTS(idContrato: any , fechamento: any):Observable<any> {
+      return this.http.get(`${this.apiUrl}/liberacao/FGTS/${idContrato}?fechamento=${fechamento}`);
+      }
+  buscarLiberacaoDECIMOTERCEIRO(idContrato: any , fechamento: any):Observable<any> {
+        return this.http.get(`${this.apiUrl}/liberacao/DECIMO_TERCEIRO/${idContrato}?fechamento=${fechamento}`);
+        }
 
   
 

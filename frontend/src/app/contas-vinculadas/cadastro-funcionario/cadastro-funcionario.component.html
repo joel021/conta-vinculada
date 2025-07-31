@@ -1,0 +1,124 @@
+<app-top-left-menu>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="toast-container">
+                <div *ngIf="!loading && errorMessage">
+                    <div *ngFor="let toast of toasts">
+                        <app-toast [title]="'Erro'" [message]="errorMessage "
+                            [customClass]="toast.type === 'error' ? 'loading-toast' : 'error-toast'"
+                            (closeHit)="toast.isShow = true">
+                        </app-toast>
+                    </div>
+                </div>
+                <div *ngIf="loading">
+                    <div *ngFor="let toast of toasts">
+                        <app-toast [title]="'Status'" [message]="'Loading...'" [message]="'Carregando, aguarde.'"
+                            [customClass]="toast.type === 'loading' ? 'error-toast' : 'loading-toast'"
+                            (closeHit)="toast.isShow = true"></app-toast>
+                    </div>
+                </div>
+                <div *ngIf="message">
+                    <div *ngIf="!loading && message">
+                        <div *ngFor="let toast of toasts">
+                            <app-toast [title]="toast.title" [message]="message"
+                                [customClass]="toast.type === 'alert' ? 'error-toast' : 'alert-toast'"
+                                (closeHit)="clearMessage()"></app-toast>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 *ngIf="!verificarCadastro && !verificarEditar">Cadastro</h3>
+        <h3 *ngIf="verificarCadastro">Novo termo aditivo</h3>
+        <h3 *ngIf="verificarEditar">Editar funcionário</h3>
+        <div style="display: flex; align-items: center;">
+            <label for="cpfTrab" >CPF</label>
+            <input *ngIf="!verificarCadastro && !verificarEditar" type="text" formControlName="cpfTrab" class="form-control" aria-label="cpfTrab"
+                aria-describedby="basic-addon1" maxlength="11" (input)="verificarInput()" required>
+            <input *ngIf="verificarCadastro || verificarEditar " type="text" formControlName="cpfTrab" class="form-control" aria-label="cpfTrab"
+                aria-describedby="basic-addon1" maxlength="11" readonly>
+            <div *ngIf="!verificarCadastro && !verificarEditar">
+                <button type="submit" [disabled]="isDisabled" class="btn btn-primary"
+                    (click)="pesquisarFuncionario(this.controls['cpfTrab'].value)">Pesquisar CPF</button>
+            </div>
+        </div>
+        <br>
+        <label for="nmTrab">NOME</label>
+        <input  *ngIf="!verificarCadastro" type="text" formControlName="nmTrab" [ngClass]="{ 'is-invalid':controls['nmTrab'].errors}"
+            class="form-control" aria-label="nmTrab" placeholder="Ex. Sizando da Silva"
+            aria-describedby="basic-addon1" required>
+        <input  *ngIf="verificarCadastro" type="text" formControlName="nmTrab" [ngClass]="{ 'is-invalid':controls['nmTrab'].errors}"
+        class="form-control" aria-label="nmTrab" placeholder="Ex. Sizando da Silva"
+            aria-describedby="basic-addon1" readonly>
+        <div *ngIf="controls['nmTrab'].errors" class="invalid-feedback">
+            <div *ngIf="controls['nmTrab'].errors['required']">Inserir o nome do funcionário</div>
+        </div>
+        <br *ngIf="!verificarCadastro">
+        <label *ngIf="!verificarCadastro" for="raca">RAÇA/COR</label>
+        <select *ngIf="!verificarCadastro" formControlName="raca" class="form-select select" aria-label="Raça"
+        [ngClass]="{ 'is-invalid':controls['raca'].errors}" >
+            <option value="" disabled selected>Selecione a raça/cor</option>
+            <option value="Amarelo(a)">Amarelo(a)</option>
+            <option value="Branco(a)">Branco(a)</option>
+            <option value="Indígena">Indígena</option>
+            <option value="Pardo(a)">Pardo(a)</option>
+            <option value="Preto(a)">Preto(a)</option>
+        </select>
+        <div *ngIf="controls['raca'].errors" class="invalid-feedback">
+            <div *ngIf="controls['raca'].errors['required']">Inserir a raça/cor do funcionário</div>
+        </div>
+        <br *ngIf="!verificarCadastro">
+        <label  *ngIf="!verificarCadastro" for="nivelEnsino">NÍVEL DE ENSINO</label> 
+        <select  *ngIf="!verificarCadastro" formControlName="nivelEnsino" class="form-select select" aria-label="nivelEnsino"
+        [ngClass]="{ 'is-invalid':controls['nivelEnsino'].errors}">
+            <option value="" disabled selected>Selecione o nível de ensino</option>
+            <option value="F">Fudamental</option>
+            <option value="M">Medio</option>
+            <option value="S">Superior</option>            
+        </select>
+        <div *ngIf="controls['nivelEnsino'].errors" class="invalid-feedback">
+            <div *ngIf="controls['nivelEnsino'].errors['required']">Inserir o nível de ensino do funcionário</div>
+        </div>
+        <br>
+        <label *ngIf="!verificarEditar" for="cargoTrab">CARGO</label>
+        <input *ngIf="!verificarEditar" type="text" formControlName="cargoTrab" [ngClass]=" { 'is-invalid':controls['cargoTrab'].errors}"
+            class="form-control" aria-label="cargoTrab" placeholder="Ex. Analista"
+            aria-describedby="basic-addon1" required>
+        <div  *ngIf="controls['cargoTrab'].errors && !verificarEditar" class="invalid-feedback">
+            <div *ngIf="controls['cargoTrab'].errors['required']">Inserir o cargo do funcionário</div>
+        </div>
+        <br *ngIf="!verificarEditar">
+        <label *ngIf="!verificarEditar" for="remunTrab">REMUNERAÇÃO</label>
+        <input *ngIf="!verificarEditar" type="text" formControlName="remunTrab" [ngClass]="{ 'is-invalid':controls['remunTrab'].errors}"
+            class="form-control" aria-label="remunTrab" placeholder="Ex. 0000,00"
+            aria-describedby="basic-addon1" required>
+        <div *ngIf="controls['remunTrab'].errors && !verificarEditar" class="invalid-feedback">
+            <div *ngIf="controls['remunTrab'].errors['required']">Inserir remuneração do funcionário</div>
+        </div>
+        <br *ngIf="!verificarEditar">
+        <label *ngIf="!verificarEditar" for="dtInicio">DATA INÍCIO</label>
+        <input *ngIf="!verificarEditar" type="date" formControlName="dtInicio" [ngClass]="{ 'is-invalid':controls['dtInicio'].errors}"
+            class="form-control" class="form-control" aria-label="dtInicio"
+            aria-describedby="basic-addon1" required [max]="getCurrentPeriod()">
+        <div *ngIf="controls['dtInicio'].errors && !verificarEditar" class="invalid-feedback">
+            <div *ngIf="controls['dtInicio'].errors['required']">Inserir data de início do funcionário</div>
+        </div>
+        <br *ngIf="!verificarEditar">
+        <label *ngIf="!verificarEditar" for="lotacao">LOTAÇÃO</label>
+        <input *ngIf="!verificarEditar" type="text" formControlName="lotacao" [ngClass]="{ 'is-invalid':controls['lotacao'].errors}"
+            class="form-control" aria-label="lotacao" placeholder="Ex. Salvador"
+            aria-describedby="basic-addon1" required>
+        <div *ngIf="controls['lotacao'].errors && !verificarEditar" class="invalid-feedback">
+            <div *ngIf="controls['lotacao'].errors['required']">Inserir a lotação do funcionário</div>
+        </div>
+        <br>
+
+        <button type="submit" [disabled]="loading" (click)=" toGoBack()" class="btn btn-primary">Voltar</button>
+        <button *ngIf="!verificarCadastro && !verificarEditar " type="submit" [disabled]="!form.valid || isDisabled " (click)="cadastrarFuncionario()"
+            class="btn btn-primary">Cadastrar funcionário</button>
+        <button *ngIf="verificarCadastro" type="submit" [disabled]="!form.valid" (click)="cadastrarFuncionario()"
+            class="btn btn-primary">Cadastrar novo termo aditivo</button>  
+        <button *ngIf="verificarEditar" type="submit" [disabled]="!form.valid" (click)="editarFuncionario()"
+            class="btn btn-primary">Editar funcionário</button>    
+    </form>
+</app-top-left-menu>

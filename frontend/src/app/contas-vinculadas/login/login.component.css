@@ -22,7 +22,13 @@ h5{
 }
 
 .banner {
+    
     width: 90%;
+}
+
+.banner1 {
+    width: 60%;
+    padding-top: 1rem;
 }
 
 .botao {

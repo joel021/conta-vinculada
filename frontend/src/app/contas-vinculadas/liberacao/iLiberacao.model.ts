@@ -2,8 +2,8 @@ import { ContratoTerceirizado } from "src/app/model/contratoTerceirizado.model";
 
 export interface IliberacaoModel {
 
-  //  id: number;
+    /*id: any;*/
     tipo: String;
-    //contratoTerceirizado?: ContratoTerceirizado;
+    contratoTerceirizado?: ContratoTerceirizado;
 
 }

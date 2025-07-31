@@ -37,24 +37,18 @@ export class UserService {
 
   signin(secao: string, username: string, password: string): Observable<any> {
 
-    console.log("siglaUnidade: "+secao+", usuario: "+username+", senha: "+password)
-
     return this.http.post<any>(`${environment.apiUrl}/users/signin`, {
-      siglaUnidade: secao,
+      dominio: secao,
       usuario: username,
       senha: password,
     })
   }
 
-  updateAuthenticated(name: string, email: string, siglaUnidade?: string): Observable<any> {
-    return this.http.patch<any>(`${environment.apiUrl}/users/`, {
-      nome: name,
-      email: email,
-      siglaUnidade: siglaUnidade
-    })
+  updateAuthenticated(userUpdated: Usuario): Observable<any> {
+    return this.http.patch<any>(`${environment.apiUrl}/users/`, userUpdated)
   }
 
-  updateNonAuthenticated(username: string, userDetails:UsuarioUpdate): Observable<any> {
+  updateNonAuthenticated(username: string, userDetails:Usuario): Observable<any> {
     return this.http.patch<any>(`${environment.apiUrl}/users/update/${username}`, userDetails)
   }
   

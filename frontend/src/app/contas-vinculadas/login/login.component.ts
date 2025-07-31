@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { DOCUMENT } from '@angular/common'
 import { UserService } from 'src/app/service/user.service'
+import { Title } from '@angular/platform-browser'
 
 
 @Component({
@@ -23,9 +24,11 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: UserService,
+    private titleService: Title,
     private route: ActivatedRoute,
     @Inject(DOCUMENT) document: Document
   ) {
+    this.titleService.setTitle("Conta Vinculada") 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -58,11 +61,10 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.signin(section, this.controls['username'].value, this.controls['password'].value)
       .subscribe({
-        next: (resp) => {
-         // console.log(resp);
+        next: (resp) => {         
           this.loading = false
           this.authenticationService.saveUserInSession(resp.userDetails)
-          if (resp.userDetails.email != null) {
+          if (resp.userDetails.email != null && resp.userDetails.email.length > 0) {
             this.router.navigate(['/contratos'])
           } else {
             this.router.navigate(['/user-register'])

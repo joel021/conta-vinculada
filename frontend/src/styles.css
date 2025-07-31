@@ -93,3 +93,14 @@
     border: 1px solid #0e0d0d;
     margin-right: 30px;
 }
+.small-input {
+    font-size: 1.0rem; 
+    width: 300px
+    
+}
+table td{
+    border:none !important;
+}
+
+
+  

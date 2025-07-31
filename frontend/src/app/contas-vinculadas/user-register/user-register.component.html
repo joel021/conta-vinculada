@@ -2,7 +2,7 @@
 
     <form class="registerform form-horizontal m-t-20" [formGroup]="registerForm" id="formRegister">
         <div class="centralizado">
-            Registro de informações pessoais <br />
+            Informações de usuário do sistema <br />
             <div *ngIf="loading" class="spinner-grow" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -11,7 +11,9 @@
         <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
             {{errorMessage}}
         </div>
-        <div class="form-group">
+
+
+        <div class="mb-3">
             <label for="nome">Nome completo</label>
             <input type="text" formControlName="nome" [ngClass]="{ 'is-invalid': submitted && controls['nome'].errors }"
                 class="form-control form-control-md" placeholder="Sizano Santos" aria-describedby="basic-addon1"
@@ -20,7 +22,7 @@
                 <div *ngIf="controls['nome'].errors['required']">Forneça seu nome.</div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <label for="email">Email</label>
             <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && controls['email'].errors }"
                 class="form-control form-control-md" placeholder="sizano@trf1.jus.br" aria-describedby="basic-addon1"
@@ -28,6 +30,46 @@
             <div *ngIf="submitted && controls['email'].errors" class="invalid-feedback">
                 <div *ngIf="controls['email'].errors['required']">Forneça seu email.</div>
                 <div *ngIf="controls['email'].errors['email']">Formato de email inválido.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="nomeSecao">Nome da sua Seção Judiciária</label>
+            <input type="text" formControlName="nomeSecao" [ngClass]="{ 'is-invalid': submitted && controls['nomeSecao'].errors }"
+                class="form-control form-control-md" placeholder="Seção Judiciária da Bahia" aria-describedby="basic-addon1"
+                required id="nomeSecaoId" />
+            <div *ngIf="submitted && controls['nomeSecao'].errors" class="invalid-feedback">
+                <div *ngIf="controls['nomeSecao'].errors['required']">Forneça o nome da sua Seção Judiciária</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="cnpjSecao">CNPJ da sua Seção Judiciária</label>
+            <input type="text" formControlName="cnpjSecao" [ngClass]="{ 'is-invalid': submitted && controls['cnpjSecao'].errors }"
+                class="form-control form-control-md" placeholder="Seção Judiciária da Bahia" aria-describedby="basic-addon1"
+                required id="cnpjSecaoId" />
+            <div *ngIf="submitted && controls['cnpjSecao'].errors" class="invalid-feedback">
+                <div *ngIf="controls['cnpjSecao'].errors['required']">Forneça o CNPJ da sua Seção Judiciária. Apenas números.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="siglaUnidade">Sigla da sua unidade</label>
+            <input type="text" formControlName="siglaUnidade" [ngClass]="{ 'is-invalid': submitted && controls['siglaUnidade'].errors }"
+                class="form-control form-control-md" placeholder="SERFI" aria-describedby="basic-addon1"
+                required id="siglaUnidadeId" />
+            <div *ngIf="submitted && controls['siglaUnidade'].errors" class="invalid-feedback">
+                <div *ngIf="controls['siglaUnidade'].errors['required']">Forneça a sigla da sua seção</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="nomeUnidade">Nome da sua Unidade</label>
+            <input type="text" formControlName="nomeUnidade" [ngClass]="{ 'is-invalid': submitted && controls['nomeUnidade'].errors }"
+                class="form-control form-control-md" placeholder="Seção de Registros Financeiros" aria-describedby="basic-addon1"
+                required id="nomeUnidadeId" />
+            <div *ngIf="submitted && controls['nomeUnidade'].errors" class="invalid-feedback">
+                <div *ngIf="controls['nomeUnidade'].errors['required']">Forneça o nome da sua seção</div>
             </div>
         </div>
 

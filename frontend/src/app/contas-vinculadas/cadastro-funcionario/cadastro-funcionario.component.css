@@ -1,0 +1,29 @@
+body {
+    zoom: 80%;
+}
+.content{
+    padding: 2em ;
+    
+}
+.form-control {
+    width: 400px;
+  }
+
+  .select {
+    width: 400px;
+}
+
+
+.inline-container {
+    display: flex;
+    align-items: center;
+}
+
+.inline {
+    margin-right: 50px; /* Ajuste conforme necessário */
+}
+
+button{
+    margin: 0 8px;
+}
+  

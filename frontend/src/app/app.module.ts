@@ -24,6 +24,9 @@ import { ToastComponent } from './contas-vinculadas/shared/toast/toast.component
 import { LiberacaoComponent } from './contas-vinculadas/liberacao/liberacao.component';
 import { HistoricoLiberacaoComponent } from './contas-vinculadas/historico-liberacao/historico-liberacao.component';
 import { HistoricoProvisaoComponent } from './contas-vinculadas/historico-provisao/historico-provisao.component';
+import { IncGrupoAComponent } from './contas-vinculadas/inc-grupo-a/inc-grupo-a.component';
+import { CadastroFuncionarioComponent } from './contas-vinculadas/cadastro-funcionario/cadastro-funcionario.component';
+
 
 
 @NgModule({
@@ -41,7 +44,8 @@ import { HistoricoProvisaoComponent } from './contas-vinculadas/historico-provis
     LiberacaoComponent,
     HistoricoLiberacaoComponent,
     HistoricoProvisaoComponent,
-    
+    IncGrupoAComponent,
+    CadastroFuncionarioComponent    
   ],
   imports: [
     BrowserModule,

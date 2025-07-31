@@ -1,0 +1,24 @@
+<app-top-left-menu>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="md-8">
+                <h4>Adicionar incidência grupo A</h4>
+                <label for="nome">Incidência grupo A</label>
+                <input type="text" class="form-control form-control-lg small-input" id="incGrupoA"
+                    aria-label="incGrupoA" placeholder="Ex. 35/35.80" aria-describedby="basic-addon1"
+                    formControlName="incGrupoA" required pattern="[0-9]+([.][0-9]+)?">
+                <label for="nome">Data</label>
+                <input type="date" class="form-control form-control-lg small-input" id="data" aria-label="data"
+                    aria-describedby="basic-addon1" formControlName="data" [max]="getCurrentPeriod()" required>
+                <br>
+                <button id="btnVoltarListFunciId" type="submit" (click)=" toGoBack()"
+                    class="btn btn-primary">Voltar</button>
+                <button id="btnAdicionarIncGrupAId" class="btn btn-primary" type="button" (click)="adicionarIncGrupA()"
+                    [disabled]="form.controls['incGrupoA'].invalid || form.controls['data'].invalid">
+                    Adicionar
+                </button>
+                
+            </div>
+        </div>
+    </form>
+</app-top-left-menu>

@@ -11,6 +11,7 @@ export class Usuario {
     enabled?: boolean
     senha?: string
     unidade?: Unidade
+    dominio?: string
 
     constructor() {
         this.token=''

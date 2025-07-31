@@ -1,63 +1,294 @@
 <app-top-left-menu>
-    
-    <div class="container">
-        <!--<div *ngIf="errorMessage && !loading" class="alert alert-danger" role="alert">
-            {{errorMessage}}
-        </div>
-        <div *ngIf="loading" class="alert alert-warning" role="alert">
-            Carregando, aguarde.
-        </div> -->
+    <form [formGroup]="form">
         <div class="row">
-            <div class="md-8">
-                <br>
-                <h4>Histórico de Liberação
-            </h4>
-
-                 
-                    <table class="table table-active">
-                        <thead>
-                            <tr>
-                                <th scope="col" >Tipo de Liberação</th>
-                                <!--<th scope="col" class="text-center">N° Contrato</th>-->
-                               
-                            </tr>
-                        </thead>
-                        <br>
-                        <tbody class="table text-left" >
-        
-                              <tr *ngIf="historicoLiberacao">
-
-                                <td>{{ historicoLiberacao.numero}}</td>
-                                <!--<td>{{ historicoLiberacao.tipo}}</td>-->
-                               <!-- <td>{{ historico.contratoTerceirizado }}</td>-->
-                                
-
-                              </tr>                                 
-                        </tbody>
-                       
-                    </table>
-                
-          
+            <div class="toast-container">
+                <div *ngIf="!loading && errorMessage">
+                    <div *ngFor="let toast of toasts">
+                        <app-toast [title]="'Erro'" [message]="errorMessage "
+                            [customClass]="toast.type === 'error' ? 'loading-toast' : 'error-toast'"
+                            (closeHit)="toast.isShow = true">
+                        </app-toast>
+                    </div>
+                </div>
+                <div *ngIf="loading">
+                    <div *ngFor="let toast of toasts">
+                        <app-toast [title]="'Status'" [message]="'Loading...'" [message]="'Carregando, aguarde.'"
+                            [customClass]="toast.type === 'loading' ? 'error-toast' : 'loading-toast'"
+                            (closeHit)="toast.isShow = true"></app-toast>
+                    </div>
+                </div>
+                <div *ngIf="message">
+                    <div *ngIf="!loading && message">
+                        <div *ngFor="let toast of toasts">
+                            <app-toast [title]="toast.title" [message]="message"
+                                [customClass]="toast.type === 'alert' ? 'error-toast' : 'alert-toast'"
+                                (closeHit)="clearMessage()"></app-toast>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <h4>Liberações
+            </h4>
+            <div class="md-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Contrato</th>
+                            <th scope="col" class="text-center">Empresa</th>
+                            <th scope="col" class="text-center">Início vigência</th>
+                            <th scope="col" class="text-center">Fim vigência</th>
+                            <th scope="col" class="text-center">Provisionados: {{selectedTipo}}</th>
+                            <th scope="col" class="text-center">Liberados: {{selectedTipo}}</th>
+                            <th scope="col" class="text-center">Disponível para liberação: {{selectedTipo}}</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="historicoLiberacao">
+                        <tr>
+                            <td class="text-center">{{ historicoLiberacao.numero }}</td>
+                            <td class="text-center">{{ historicoLiberacao.pessoaJuridica?.nome }}</td>
+                            <td class="text-center">{{ historicoLiberacao.inicioVigencia | date:'dd/MM/yyyy' }}</td>
+                            <td class="text-center">{{ historicoLiberacao.fimVigencia | date:'dd/MM/yyyy' }}</td>
+                            <td class="text-center"> 
+                                <ng-container *ngIf="liberacaoFERIAS">{{ formatarNumero(liberacaoFERIAS.totalProvision)
+                                    }}</ng-container>
+                                <ng-container *ngIf="liberacaoFGTS">{{ formatarNumero(liberacaoFGTS.totalProvision)
+                                    }}</ng-container>
+                                <ng-container *ngIf="liberacaoDecimoTerceiro">{{
+                                    formatarNumero(liberacaoDecimoTerceiro.totalProvision) }}</ng-container>
+                                <ng-container
+                                    *ngIf="!liberacaoFERIAS && !liberacaoFGTS && !liberacaoDecimoTerceiro">-</ng-container>
+                            </td>
+                            <td class="text-center">
+                                <ng-container *ngIf="liberacaoFERIAS">{{ formatarNumero(liberacaoFERIAS.totalLiberation)
+                                    }}</ng-container>
+                                <ng-container *ngIf="liberacaoFGTS">{{ formatarNumero(liberacaoFGTS.totalLiberation)
+                                    }}</ng-container>
+                                <ng-container *ngIf="liberacaoDecimoTerceiro">{{
+                                    formatarNumero(liberacaoDecimoTerceiro.totalLiberation) }}</ng-container>
+                                <ng-container
+                                    *ngIf="!liberacaoFERIAS && !liberacaoFGTS && !liberacaoDecimoTerceiro">-</ng-container>
+                            </td>
+                            <td class="text-center">
+                                <ng-container>{{ formatarNumero(disponivelLiberacao) }}</ng-container>
+                            </td>
+                        </tr>
+                    </tbody>
 
-    
-           
+                </table>
+
+            </div>
+            <div class="md-12">
+                <div class="inline-container">
+
+                    <h6 class="inline">Rubrica: <select class="form-select form-control-lg small-input inputtipo3"
+                            name="tipo" id="inputtipo" formControlName="tipo"
+                            (change)="onTipoChange($any($event.target).value)">
+                            <option class="text-center" *ngFor="let option of tipoOptions" [value]="option">{{ option ==
+                                "DECIMO_TERCEIRO" ? "Décimo 13°" : option == "FGTS" ? "FGTS" : option == "FERIAS" ?
+                                "Férias":"Nenhum"}}</option>
+                        </select>
+                    </h6>
+                    <h6 class="inline">Fechamento da liberação:</h6>
+                    <input type="date" class="form-control form-control-lg small-input" id="data" aria-label="data"
+                        aria-describedby="basic-addon1" formControlName="data" required [max]="getCurrentPeriod()">
+                    <br>
+                    <h6 class="inline" *ngIf="optionsArray.length > 0">
+                        Período aquisitivo:
+                        <select class="form-select form-control-lg small-input inputtipo2" name="quantidadeLiberacao"
+                            id="quantidadeLiberacaoId" formControlName="quantidadeLiberacao"
+                            (change)="qtdLiberacao(optionsArray)">
+                            <option class="text-center" *ngFor="let option of optionsArray.reverse()" [value]="option">
+                                {{ option }}º Período aquisitivo
+                            </option>
+                        </select>
+                    </h6>
+                </div>
+                <button id="btnBuscarLiberacaoId" class="btn btn-primary translate-middle-h" type="button"
+                    (click)="listarHistLiberacao()"
+                    [disabled]="form.controls['tipo'].invalid || form.controls['data'].invalid">
+                    Buscar
+                </button>
+                <br>
+                <h5 *ngIf="liberacaoFERIAS.feriasPeriodProvisionList || liberacaoFGTS.funcionarioProvisions || liberacaoDecimoTerceiro.funcionarioProvisions" class="text-center">Empregados</h5>
+                <table *ngIf="liberacaoFERIAS.feriasPeriodProvisionList || liberacaoFGTS.funcionarioProvisions || liberacaoDecimoTerceiro.funcionarioProvisions" class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" (change)="marcarTodos($event)"> Filtrar todos
+                            </th>
+                            <th scope="col" class="text-center">Nome</th>
+                            <th scope="col" class="text-center">Cargo</th>
+                            <th scope="col" class="text-center">Remuneração</th>
+                            <th scope="col" class="text-center">Período aquisitivo</th>
+                            <th scope="col" class="text-center">Total das provisões </th>
+                            <th scope="col" class="text-center">Data da liberação</th>
+                            <th scope="col" class="text-center">Ofício movimentacão</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="liberacaoFERIAS && liberacaoFERIAS.feriasPeriodProvisionList">
+                        <ng-container
+                            *ngFor="let liberacaoFERIASItem of liberacaoFERIAS.feriasPeriodProvisionList; let i = index">
+                            <ng-container
+                                *ngIf="liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao] && liberacaoFERIASItem.feriasProvisionList.length > 0">
+                                <tr>
+                                    <td>
+                                        <input
+                                            *ngIf="!liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.dataLiberacao"
+                                            type="checkbox" (change)="toggleItem(liberacaoFERIASItem)">
+
+                                        <i *ngIf="liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.dataLiberacao"
+                                            class="bi bi-check checkLiberado"></i>
+                                    </td>
+                                    <td class="text-center">{{ liberacaoFERIASItem.funcionario.pessoaFisica.nome }}</td>
+                                    <td class="text-center">
+                                        {{
+                                        liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.provisoes[liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.provisoes.length
+                                        - 1]?.cargo }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{
+                                        formatarNumero(liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.provisoes[liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.provisoes.length
+                                        - 1]?.remuneracao) }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{
+                                        (liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.workPeriod.startDate
+                                        |
+                                        date:'dd/MM/yyyy') + " a " +
+                                        (liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.workPeriod.endDate |
+                                        date:'dd/MM/yyyy') }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{
+                                        formatarNumero(liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.totalProvision)
+                                        }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.dataLiberacao |
+                                        date:'dd/MM/yyyy' }}
+                                    </td>
+                                    <td *ngIf="liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.oficioMovimentacao"
+                                        class="text-center">
+                                        Ano:
+                                        {{liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.oficioMovimentacao.anoOficio}}
+                                        /
+                                        Número:
+                                        {{liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.oficioMovimentacao.numeroOficio}}
+                                        /
+                                        DocSEI:
+                                        {{liberacaoFERIASItem.feriasProvisionList[posicaoLiberacao]?.oficioMovimentacao.docSei}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                    <tbody *ngIf="liberacaoFGTS">
+                        <ng-container *ngIf="liberacaoFGTS.funcionarioProvisions">
+                            <ng-container
+                                *ngFor="let liberacaoFGTSItem of liberacaoFGTS.funcionarioProvisions; let i = index">
+                                <tr>
+                                    <td>
+                                        <input *ngIf="!liberacaoFGTSItem.dataLiberacao" type="checkbox"
+                                            (change)="toggleItem(liberacaoFGTSItem)">
+                                        <i *ngIf="liberacaoFGTSItem.dataLiberacao"
+                                            class="bi bi-check checkLiberado"></i>
+                                    </td>
+                                    <td>{{ liberacaoFGTSItem.funcionario.pessoaFisica.nome }}</td>
+                                    <td class="text-center">{{
+                                        liberacaoFGTSItem.provisoes[liberacaoFGTSItem.provisoes.length - 1].cargo }}
+                                    </td>
+                                    <td class="text-center">{{
+                                        formatarNumero(liberacaoFGTSItem.provisoes[liberacaoFGTSItem.provisoes.length -
+                                        1].remuneracao) }}</td>
+                                    <td class="text-center">{{ (liberacaoFGTSItem.workPeriod.startDate |
+                                        date:'dd/MM/yyyy') + " a " + (liberacaoFGTSItem.workPeriod.endDate |
+                                        date:'dd/MM/yyyy') }}</td>
+                                    <td class="text-center">{{ formatarNumero(liberacaoFGTSItem.totalProvision) }}</td>
+                                    <td class="text-center">
+                                        {{ liberacaoFGTSItem.dataLiberacao |
+                                        date:'dd/MM/yyyy' }}
+                                    </td>
+                                    <td *ngIf="liberacaoFGTSItem.oficioMovimentacao" class="text-center">
+                                        Ano:
+                                        {{liberacaoFGTSItem.oficioMovimentacao.anoOficio}} /
+                                        Número:
+                                        {{liberacaoFGTSItem.oficioMovimentacao.numeroOficio}} /
+                                        DocSEI:
+                                        {{liberacaoFGTSItem.oficioMovimentacao.docSei}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+
+                    <tbody *ngIf="liberacaoDecimoTerceiro && liberacaoDecimoTerceiro.funcionarioProvisions">
+                        <ng-container
+                            *ngFor="let liberacaoDecimoTerceiroItem of liberacaoDecimoTerceiro.funcionarioProvisions; let i = index">
+                            <ng-container
+                                *ngIf="arrayDecimoProvisions[i] && arrayDecimoProvisions[i]?.[posicaoLiberacao] ">
+                                <tr>
+                                    <td>
+                                        <input
+                                            *ngIf="!arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.dataLiberacao"
+                                            type="checkbox"
+                                            (change)="toggleItem(arrayDecimoProvisions[i]?.[posicaoLiberacao])">
+                                        <i *ngIf="arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.dataLiberacao"
+                                            class="bi bi-check checkLiberado"></i>
+                                    </td>
+                                    <td>{{ liberacaoDecimoTerceiroItem.funcionario.pessoaFisica.nome }}</td>
+                                    <td class="text-center">{{
+                                        arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.provisoes[0]?.cargo }}
+                                    </td>
+                                    <td class="text-center">{{
+                                        formatarNumero(arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.provisoes[0]?.remuneracao)
+                                        }}</td>
+                                    <td class="text-center">{{
+                                        (arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.workPeriod.startDate |
+                                        date:'dd/MM/yyyy') + " a " +
+                                        (arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.workPeriod.endDate |
+                                        date:'dd/MM/yyyy') }}</td>
+                                    <td class="text-center">{{
+                                        formatarNumero(arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.totalProvision)
+                                        }}</td>
+                                    <td class="text-center">
+                                        {{ arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.dataLiberacao |
+                                        date:'dd/MM/yyyy' }}
+                                    </td>
+                                    <td *ngIf="arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.oficioMovimentacao"
+                                        class="text-center">
+                                        Ano:
+                                        {{arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.oficioMovimentacao.anoOficio}}
+                                        /
+                                        Número:
+                                        {{arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.oficioMovimentacao.numeroOficio}}
+                                        /
+                                        DocSEI:
+                                        {{arrayDecimoProvisions[i]?.[posicaoLiberacao].provision?.oficioMovimentacao.docSei}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+
+                    <tr *ngIf="getTotalCheckedItems()">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th class="text-center">Total a liberar:</th>
+                        <th class="text-center">{{ formatarNumero(getTotalCheckedItems()) }}</th>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="md-12">
+                    <button id="btnVoltarPesquContId" type="submit" (click)=" toGoBack()"
+                        [disabled]="loading && !loaded" class="btn btn-primary mx-2">Voltar</button>
+                    <app-modal *ngIf="liberacaoFERIAS.feriasPeriodProvisionList || liberacaoFGTS.funcionarioProvisions || liberacaoDecimoTerceiro.funcionarioProvisions" [title]="'Confirmação'" [body]='"Tem certeza que deseja realizar a liberação? "'
+                        [yesButton]="'Sim'" [noButton]="'Não'" [context]="this" [buttonTitle]="'Liberar'"
+                        id="btnliberarId" [buttonClass]="'btn btn-primary'"
+                        [enabled]="getTotalCheckedItems()"></app-modal>
+                </div>
+            </div>
         </div>
- 
-    </div>
-
+    </form>
 </app-top-left-menu>
-
-
-
-
-<!-- <div *ngIf="historicoLiberacaos">
-    <h2>Histórico de Liberação</h2>
-    <ul>
-      <li *ngFor="let historico of historicoLiberacaos">
-        {{ historico.tipo }} - {{ historico.data }}
-      </li>
-    </ul>
-  </div> -->
-
-

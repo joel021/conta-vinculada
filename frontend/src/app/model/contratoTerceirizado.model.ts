@@ -8,7 +8,8 @@ export class ContratoTerceirizado{
  pessoaFisica?: PessoaFisica
  contrato?: Contrato
  contratoTerceirizadoList: any;
-
+  idFuncionario: any;
+    
  constructor(){
    
  }

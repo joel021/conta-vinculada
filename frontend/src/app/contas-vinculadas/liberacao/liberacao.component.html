@@ -1,5 +1,4 @@
 <app-top-left-menu>
-    
         <div class="container">
             <div *ngIf="errorMessage && !loading" class="alert alert-danger" role="alert">
                 {{errorMessage}}
@@ -12,61 +11,42 @@
                     <br>
                     <h4>Cadastrar Liberação
                 </h4>
-    
-                        <form [formGroup]="liberacaoForm" id="liberacaoForm">
-                        <table class="table table-active ">
+                     <form [formGroup]="liberacaoForm" id="liberacaoForm">
+                        <table class="table table-striped">  
                             <thead>
-                                <tr>
-                                  
+                                <tr>  
                                     <th scope="col" class="text-center">Unidade</th>
                                     <th scope="col" class="text-center">N° Contrato</th>
                                         <th scope="col" class="text-center">
-                                           
-                                            <select class="form-select" name="tipo" id="inputtipo" formControlName="tipo" (change)="onTipoChange($any($event.target).value)" > <!--(change)="salvarValorExibidoSelecionado()"-->
-                                                <option value="" disabled selected class="text-center cabecalho">Liberação desejada</option> 
-                                                <!--1912<option selected class="text-center cabecalho">Liberação Desejada</option> -->
-                                                <!--<option class="text-center" *ngFor="let option of situacaoOptions" [value]="option">{{ option == "DECIMO_TERCEIRO" ? "Décimo 13°" : "nenhum"}}</option> -->
-                                                <option class="text-center" *ngFor="let option of tipoOptions" [value]="option">{{ option == "DECIMO_TERCEIRO" ? "Décimo 13°" : option == "ABONO" ? "Abono" : option == "FERIAS" ? "Férias":"Nenhum"}}</option> 
-                                            </select> 
-                                       
-                                        </th>
-                                    <!--<th scope="col" class="text-center">Liberação Desejada</th> temp-->
-                                
+                                            <select class="form-select" name="tipo" id="inputtipo" formControlName="tipo" (change)="onTipoChange($any($event.target).value)">
+                                                <option value="" disabled selected class="text-center cabecalho">Liberação desejada</option>
+                                                <option class="text-center" *ngFor="let option of tipoOptions" [value]="option">{{ option == "DECIMO_TERCEIRO" ? "Décimo 13°" : option == "FGTS" ? "FGTS" : option == "FERIAS" ? "Férias":"Nenhum"}}</option> 
+                                            </select>          
+                                        </th>  
+                                        <th>
+                                            <h6  *ngIf="liberacaoFGTS"  class="text-center">Data do desligamento</h6>                                        
+                                        </th>         
                                 </tr>
                             </thead>
                             <br>
                             <tbody class="table text-center">
-            
                                   <tr *ngIf="dadosContrato || selectedTipo">
                                     <td>{{ dadosContrato.unidade }}</td>
                                     <td>{{ dadosContrato.numero }}</td>
                                     <td>{{ selectedTipoDisplay }}</td>
-                                    <!--<td>
-                                        <select class="form-select" name="tipo" id="inputtipo"  formControlName="tipo" (change)="onTipoChange($any($event.target).value)">
-                                        <option class="text-center" *ngFor="let option of tipoOptions" [value]="option">{{ option == "DECIMO_TERCEIRO" ? "Décimo 13°" : option == "ABONO" ? "Abono" : option == "FERIAS" ? "Férias":"Nenhum"}}</option> 
-                                        </select> 
-                                    </td> temp-->
+                                    <td class="inline-container" > 
+                                        <input  *ngIf="liberacaoFGTS" type="date" class=" form-control form-control-lg small-input inline" id="data"
+                                        aria-label="data" aria-describedby="basic-addon1" formControlName="data"
+                                        required [max]="getCurrentPeriod()"></td>
     
                                   </tr>                   
-                            </tbody>
-                           
+                            </tbody>         
                         </table>
-                        <!--<button  type="button" class="btn btn-primary modif"(click)="salvarValorExibidoSelecionado()" [disabled]="!faseSelecaoForm.valid">Cadastrar Liberação</button> -->
-                        <input type="button" class="btn btn-primary" [disabled]="!liberacaoForm.valid" value = "{{ isEditing ? 'Cadastrar liberação' : 'Cadastrar liberação' }}"
-                        (click)="isEditing ? updateLiberacao() : createLiberacao()"><!--value = "{{ isEditing ? 'Cadastrar Liberação' : 'Cadastrar Liberação' }}"
-                            (click)="isEditing ? updateFaseSelecao() : createFaseSelecao()" -->
-                    </form>
-                   
-              
-                </div>
-    
-        
-               
+                        <input type="button" class="btn btn-primary" id="buttonLiberacaoId" [disabled]="!liberacaoForm.valid" value = "{{ isEditing ? 'Cadastrar liberação' : 'Cadastrar liberação' }}"
+                        (click)="isEditing ? updateLiberacao() : createLiberacao()">
+                    </form>   
+                </div>      
             </div>
-            <!--<button  type="submit" class="btn btn-primary modif"(click)="salvarValorExibidoSelecionado()">Cadastrar Liberação</button>-->
-        </div>
-
-      
-    
+        </div>     
     </app-top-left-menu>
     

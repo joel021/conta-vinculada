@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contrato } from 'src/app/model/contrato.model';
 import { ContratoService } from 'src/app/service/contrato.service';
@@ -23,8 +24,11 @@ export class ContratosComponent implements OnInit {
   constructor(
     private router: Router,
     private contratoService: ContratoService,
+    private titleService:Title,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.titleService.setTitle("Contratos") 
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -39,13 +43,11 @@ export class ContratosComponent implements OnInit {
     });
   }
 
-
   pesquisarContrato(empresa: string) {
     this.loading = true;
     this.errorMessage = '';
     this.contratoService.getContrato(empresa).subscribe({
-      next: (resp) => {
-        console.log(resp);
+      next: (resp) => {        
         this.loading = false;
         this.loaded = true;
         this.empresasEncontradas = resp;
@@ -64,6 +66,22 @@ export class ContratosComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  adicionarFuncionario(idContrato: any) {
+    for ( let i = 0; i < this.empresasEncontradas.length; i++) { 
+    if(idContrato == this.empresasEncontradas[i].idContrato ){
+      const contrato = this.empresasEncontradas[i].numero
+      const empresa = this.empresasEncontradas[i].pessoaJuridica?.nome
+    this.router.navigate([`cadastro-funcionario/${idContrato}/`], { 
+      queryParams: {
+      empresa: empresa,
+      contrato: contrato,            
+      idContrato: idContrato
+    },
+   })
+    }
+    }
   }
 
   extrairData(dateTimeString?: string): string {
@@ -105,7 +123,7 @@ export class ContratosComponent implements OnInit {
           queryParams: {
             empresa: empresa,
             contrato: contrato,            
-            id: idContrato
+            idContrato: idContrato
           },
         });
       }

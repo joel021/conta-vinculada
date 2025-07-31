@@ -1,0 +1,17 @@
+
+table td{
+  border:none !important;
+} 
+
+.inputtipo{
+    width: 185px;  
+  }
+
+  .inline-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .inline {
+    margin-right: 10px; /* Ajuste conforme necessário */
+  }
