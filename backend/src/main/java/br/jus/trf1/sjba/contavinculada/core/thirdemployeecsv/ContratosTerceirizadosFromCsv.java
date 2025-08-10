@@ -145,8 +145,22 @@ public class ContratosTerceirizadosFromCsv {
         Contrato contrato = new Contrato();
         contrato.setNumero(getNumeroContrato(line));
         contrato.setPessoaJuridica(getPessoaJuridica(line));
+        contrato.setUnidade(getUnidade(line));
+        contrato.setSecaoJudiciaria(getSecaoJudiciaria(line));
 
         return contrato;
+    }
+
+    public SecaoJudiciaria getSecaoJudiciaria(String[] line) {
+        SecaoJudiciaria secaoJudiciaria = new SecaoJudiciaria();
+        secaoJudiciaria.setCnpjSecao(getCNPJUnidadeGestora(line));
+        secaoJudiciaria.setSigla(getUnidade(line));
+        secaoJudiciaria.setNome(stringUtils.contentOrNull(line[18]));
+        return secaoJudiciaria;
+    }
+
+    public String getUnidade(String[] line) {
+        return stringUtils.contentOrNull(line[16]);
     }
 
     public PessoaFisica getPessoaFisica(String[] line) {
@@ -172,5 +186,9 @@ public class ContratosTerceirizadosFromCsv {
         } else {
             return NivelEnsino.valueOf(line[8].trim().toUpperCase());
         }
+    }
+
+    public String getCNPJUnidadeGestora(String[] line) {
+        return line[17].trim();
     }
 }

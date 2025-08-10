@@ -105,9 +105,18 @@ public class ContratoTerceirizadoService {
     public ContratoTerceirizado save(ContratoTerceirizado contratoTerceirizado, String userUnidade) throws NotFoundException,
             NotAcceptableException {
 
-        contratoTerceirizado.setContrato(contratoService.findContrato(contratoTerceirizado.getContrato(), userUnidade));
-        contratoTerceirizado.setFuncionario(funcionarioService.saveIfNotExists(contratoTerceirizado.getFuncionario()));
-        contratoTerceirizado.setLotacao(lotacaoService.saveIfNotExists(contratoTerceirizado.getLotacao()));
+        if (contratoTerceirizado.getContrato() != null) {
+            contratoTerceirizado.setContrato(contratoService.saveIfNotExists(contratoTerceirizado.getContrato(), userUnidade));
+        }
+
+        if (contratoTerceirizado.getFuncionario() != null) {
+            contratoTerceirizado.setFuncionario(funcionarioService.saveIfNotExists(contratoTerceirizado.getFuncionario()));
+        }
+
+        if  (contratoTerceirizado.getLotacao() != null) {
+            contratoTerceirizado.setLotacao(lotacaoService.saveIfNotExists(contratoTerceirizado.getLotacao()));
+        }
+
        return checkUniqueSaveOrThrows(contratoTerceirizado);
     }
 

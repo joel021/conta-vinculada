@@ -34,7 +34,11 @@ public class SecaoJudiciariaService {
 
         Optional<SecaoJudiciaria> secaoJudiciariaList = secaoJudiciariaRepository.findById(secaoJudiciaria.getCnpjSecao());
         if (secaoJudiciariaList.isEmpty()) {
-            secaoJudiciaria.setSiglaByDominio(dominio);
+
+            if (dominio != null) {
+                secaoJudiciaria.setSiglaByDominio(dominio);
+            }
+
             return secaoJudiciariaRepository.save(secaoJudiciaria);
         }
         return secaoJudiciariaList.get();

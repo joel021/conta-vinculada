@@ -19,8 +19,11 @@ public class StringUtils {
         return string.trim().isEmpty();
     }
 
-    public String onlyAllNumbers(String string) {
+    public String onlyNumbers(String string) {
 
+        if (string == null) {
+            return "";
+        }
         StringBuilder numbers = new StringBuilder();
         Matcher matcher = numbersPattern.matcher(string);
         while (matcher.find()){
@@ -31,7 +34,7 @@ public class StringUtils {
 
     public String onlyNumbersOrNull(String string) {
 
-        final var numbers = onlyAllNumbers(string);
+        final var numbers = onlyNumbers(string);
         if (isEmpty(numbers)) {
             return null;
         }
@@ -58,7 +61,7 @@ public class StringUtils {
 
     public String onlyNumbersOrThrows(String string) throws NotAcceptableException {
 
-        final var numbers = onlyAllNumbers(string);
+        final var numbers = onlyNumbers(string);
         if (isEmpty(numbers)) {
             throw new NotAcceptableException("É permitdo apenas números.");
         }

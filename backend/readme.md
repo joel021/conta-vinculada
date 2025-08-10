@@ -83,3 +83,12 @@ Switch between installed java:
 ```
 sudo update-alternatives --config java
 ```
+
+
+**Load environment variables from a .env-\<profile> file**
+```
+$ source .env-<profile>
+```
+
+**Attention!**
+The JWT key should be a string with characters inside the Base64 alphabet (A-Z, a-z, 0-9, +, /, and optionally = padding).

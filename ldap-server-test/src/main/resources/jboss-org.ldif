@@ -19,6 +19,33 @@ sn: duke
 uid: jduke
 userPassword: theduke
 
+dn: uid=bwilliams,ou=Users,dc=jboss,dc=org
+objectClass: top
+objectClass: person
+objectClass: inetOrgPerson
+cn: Bob Williams
+sn: williams
+uid: bwilliams
+userPassword: willbob
+
+dn: uid=ajohnson,ou=Users,dc=jboss,dc=org
+objectClass: top
+objectClass: person
+objectClass: inetOrgPerson
+cn: Alice Johnson
+sn: johnson
+uid: ajohnson
+userPassword: password
+
+dn: uid=jsmith,ou=Users,dc=jboss,dc=org
+objectClass: top
+objectClass: person
+objectClass: inetOrgPerson
+cn: John Smith
+sn: smith
+uid: jsmith
+userPassword: password
+
 dn: ou=Roles,dc=jboss,dc=org
 objectclass: top
 objectclass: organizationalUnit

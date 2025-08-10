@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Data
-public class SecaoJudiciaria {
+public class SecaoJudiciaria { //TODO: rename to "OrgaoPublico"
 
     @Id
     public String cnpjSecao;

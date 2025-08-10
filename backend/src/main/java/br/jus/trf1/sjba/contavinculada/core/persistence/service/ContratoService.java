@@ -21,6 +21,12 @@ public class ContratoService {
     @Autowired
     private PessoaJuridicaService pessoaJuridicaService;
 
+    @Autowired
+    private SecaoJudiciariaService secaoJudiciariaService;
+
+    @Autowired
+    private ObjetoContratoService objetoContratoService;
+
     public List<Contrato> searchByNomePessoaJuridica(String name, String unidade) {
 
         List<PessoaJuridica> companyList = pessoaJuridicaService.searchPessoaByName(name);
@@ -73,4 +79,28 @@ public class ContratoService {
         throw new NotFoundException("Não foi possível encontrar o contrato.");
     }
 
+    public Contrato saveIfNotExists(Contrato contrato, String userUnidade) {
+
+        try {
+            return findContrato(contrato, userUnidade);
+        } catch (NotFoundException ignored) {}
+        return save(contrato);
+    }
+
+    public Contrato save(Contrato contrato) {
+
+        if (contrato.getSecaoJudiciaria() != null){
+            contrato.setSecaoJudiciaria(secaoJudiciariaService.findOrCreate(contrato.getSecaoJudiciaria(), null));
+        }
+
+        if (contrato.getPessoaJuridica() != null){
+            contrato.setPessoaJuridica(pessoaJuridicaService.saveIfNotExists(contrato.getPessoaJuridica()));
+        }
+
+        if (contrato.getObjetoContrato() != null){
+            contrato.setObjetoContrato(objetoContratoService.saveIfNotExists(contrato.getObjetoContrato()));
+        }
+
+        return contratoRepository.save(contrato);
+    }
 }

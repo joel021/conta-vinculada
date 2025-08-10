@@ -2,7 +2,7 @@
   "users" : [
     {
       "usuario": "uid=jduke,ou=Users,dc=jboss,dc=org",
-      "nome": "Duke Admin",
+      "nome": "Duke GUEST",
       "dominio": "JFBA",
       "unidade": {
         "siglaUnidade": "SJBA",
@@ -18,7 +18,7 @@
     },
     {
       "usuario": "uid=bwilliams,ou=Users,dc=jboss,dc=org",
-      "nome": "Williams GUEST",
+      "nome": "Williams ADMIN",
       "dominio": "JFBA",
       "unidade": {
         "siglaUnidade": "SJBA",

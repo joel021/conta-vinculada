@@ -22,7 +22,7 @@ public class ContratosTerceirizadosFromCsvTests {
     public static void setup() {
 
         contratosTerceirizadosFromCsv = new ContratosTerceirizadosFromCsv();
-        line = "5886626,00899223-0001-32,ELETROCONTROLE LTDA,TARCÍSIO SANTOS DE OLIVEIRA,010982375-36,v,982375,MEC. DE REFRIGERAÇÃO,M,PARDO/A,SALVADOR,10,ANTONIO CARLOS DALTRO AZEVEDO,002949135-56,,01/11/2023,SJBA".split(",");
+        line = "5886626,00899223-0001-32,ELETROCONTROLE LTDA,TARCÍSIO SANTOS DE OLIVEIRA,010982375-36,v,982375,MEC. DE REFRIGERAÇÃO,M,PARDO/A,SALVADOR,0, , ,,01/11/2023,SJBA,5442957000101,Seção Judiciária da Bahia".split(",");
     }
 
     @Test
@@ -43,9 +43,9 @@ public class ContratosTerceirizadosFromCsvTests {
     public void instancianteFromLinesTest() throws NotAcceptableException {
 
         List<String> lines = new ArrayList<>();
-        lines.add("Contrato nº:,CNPJ,Contratada,Nome do empregado,CPF,Verific.,CPF,Cargo Atividade,Nível Ensino,Cor/Raça,Lotação / Local de Exercício,Dias Ausentes,Nome do Empregado Substituto no Período de Ausência,CPF,CPF,Mês de Referência:,Unidade Gestora ");
-        lines.add("5886626,00899223-0001-32,ELETROCONTROLE LTDA,TARCÍSIO SANTOS DE OLIVEIRA,010982375-36,v,982375,MEC. DE REFRIGERAÇÃO,M,PARDO/A,SALVADOR,0, , ,,01/11/2023,SJBA");
-        lines.add("5886626,00899223-0001-32,ELETROCONTROLE LTDA,GILVAN SANTOS FERREIRA,051058525-67,v,058525,AJUDANTE PRÁTICO,M,PRETO/A,SALVADOR,0, , ,,,");
+        lines.add("Contrato nº:,CNPJ,Contratada,Nome do empregado,CPF,Verific.,CPF,Cargo Atividade,Nível Ensino,Cor/Raça,Lotação / Local de Exercício,Dias Ausentes,Nome do Empregado Substituto no Período de Ausência,CPF,CPF,Mês de Referência:,Unidade Gestora,CNPJ orgao publico,Nome orgao publico");
+        lines.add("5886626,00899223-0001-32,ELETROCONTROLE LTDA,TARCÍSIO SANTOS DE OLIVEIRA,010982375-36,v,982375,MEC. DE REFRIGERAÇÃO,M,PARDO/A,SALVADOR,0, , ,,01/11/2023,SJBA,5442957000101,Seção Judiciária da Bahia");
+        lines.add("5886626,00899223-0001-32,ELETROCONTROLE LTDA,GILVAN SANTOS FERREIRA,051058525-67,v,58525,AJUDANTE PRÁTICO,M,PRETO/A,SALVADOR,0, , ,,,SJBA,5442957000101,Seção Judiciária da Bahia");
         ContratosTerceirizadosData contratosTerceirizadosData = contratosTerceirizadosFromCsv.instantiateFromLines(lines);
         assertFalse(contratosTerceirizadosData.getContratoTerceirizadoList().isEmpty());
     }
@@ -186,7 +186,7 @@ public class ContratosTerceirizadosFromCsvTests {
     @Test
     public void getAfastamentoTest() {
 
-        String[] line = "5886626,00899223-0001-32,ELETROCONTROLE LTDA,GILVAN SANTOS FERREIRA,051058525-67,v,058525,AJUDANTE PRÁTICO,M,PRETO/A,SALVADOR,0, , ,,,".split(",");
+        String[] line = "5886626,00899223-0001-32,ELETROCONTROLE LTDA,GILVAN SANTOS FERREIRA,051058525-67,v,58525,AJUDANTE PRÁTICO,M,PRETO/A,SALVADOR,0, , ,,,SJBA,5442957000101,Seção Judiciária da Bahia".split(",");
         AfastamentoData afastamentoData = contratosTerceirizadosFromCsv.getAfastamento(LocalDate.now(), line);
         assertNull(afastamentoData);
     }

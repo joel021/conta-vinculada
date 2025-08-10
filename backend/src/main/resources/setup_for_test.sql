@@ -1,4 +1,4 @@
-use conta_vinculada;
+use conta_vinculada_db;
 
 insert into pessoa(id_pessoa, nome) values (111212121, "Pessoa Juridica Para Teste");
 
