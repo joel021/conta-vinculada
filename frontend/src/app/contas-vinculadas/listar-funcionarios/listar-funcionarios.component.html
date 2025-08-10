@@ -1,142 +1,149 @@
-<app-top-left-menu>  
-    <div class="row">
-      <div class="toast-container">
-        <div *ngIf="!loading && errorMessage">
-          <div *ngFor="let toast of toasts">
-            <app-toast [title]="'Erro'" [message]="errorMessage "
-              [customClass]="toast.type === 'error' ? 'loading-toast' : 'error-toast'" (closeHit)="toast.isShow = true">
-            </app-toast>
-          </div>
+<app-top-left-menu>
+  <div class="row">
+    <div class="toast-container">
+      <div *ngIf="!loading && errorMessage">
+        <div *ngFor="let toast of toasts">
+          <app-toast [title]="'Erro'" [message]="errorMessage "
+            [customClass]="toast.type === 'error' ? 'loading-toast' : 'error-toast'" (closeHit)="toast.isShow = true">
+          </app-toast>
         </div>
-        <div *ngIf="loading">
-          <div *ngFor="let toast of toasts">
-            <app-toast [title]="'Status'" [message]="'Loading...'" [message]="'Carregando, aguarde.'"
-              [customClass]="toast.type === 'loading' ? 'error-toast' : 'loading-toast'"
-              (closeHit)="toast.isShow = true"></app-toast>
-          </div>
-        </div>
-        <div *ngIf="!loading">
-          <div *ngIf="!loading && message">
-            <div *ngFor="let toast of toasts">
-              <app-toast [title]="toast.title" [message]="message"
-                [customClass]="toast.type === 'alert' ? 'error-toast' : 'alert-toast'"
-                (closeHit)="clearMessage()"></app-toast>
-            </div>
-          </div>
-        </div>
-
       </div>
-      <div class="md-12">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Empresa</th>
-              <th scope="col" class="text-center">Contrato</th>
-              <th scope="col" class="text-center">Início vigência</th>
-              <th scope="col" class="text-center">Fim vigência</th>
-              <th scope="col" class="text-center">Inc.grupo A</th>
-              <th scope="col" class="text-center">Ação</th>
-            </tr>
-          </thead>
-
-          <tbody *ngIf="funcionariosEncontradoContrato.length > 0">
-            <ng-container>
-              <tr>
-                <td title={{funcionariosEncontradoContrato[0].contrato?.pessoaJuridica?.nome}}
-                  *ngIf="funcionariosEncontradoContrato[0].contrato?.pessoaJuridica?.nome">
-                  {{ truncateText(funcionariosEncontradoContrato[0].contrato?.pessoaJuridica?.nome || '') }}
-                </td>
-                <td class="text-center">
-                  {{ funcionariosEncontradoContrato[0].contrato?.numero }}
-                </td>
-                <td class="text-center">
-                  {{ funcionariosEncontradoContrato[0].contrato?.inicioVigencia | date:'dd/MM/yyyy' }}
-                </td>
-                <td class="text-center">
-                  {{ funcionariosEncontradoContrato[0].contrato?.fimVigencia | date:'dd/MM/yyyy' }}
-                </td>
-                <td class="text-center">
-                  {{ incGrupoA }}
-                </td>
-                <td class="text-center">
-                  <button id="btnHistProvisaoId" class="btn btn-primary mx-1 btn-custom" type="button"
-                    (click)="histProvisao(funcionariosEncontradoContrato[0].contrato?.idContrato)">Provisões</button>
-                  <button id="btnHistLibercaoId" class="btn btn-primary  mx-1 btn-custom" type="button"
-                    (click)="histLiberacao(funcionariosEncontradoContrato[0].contrato?.idContrato)">Liberações</button>
-                  <button id="btnIncGrupAId" class="btn btn-primary  mx-1 btn-custom" type="button"
-                    (click)="adicionarIncGrupoA(funcionariosEncontradoContrato[0].contrato?.idContrato)">Adicionar
-                    inc.grupo
-                    A</button>
-                  <button id="btnAdicionarFuncionarioId" class="btn btn-primary  btn-custom mx-1" type="button"
-                    (click)="adicionarFuncionario(funcionariosEncontradoContrato[0].contrato?.idContrato)">Adicionar
-                    funcionário</button>
-              </tr> 
-            </ng-container>
-          </tbody>
-        </table>
+      <div *ngIf="loading">
+        <div *ngFor="let toast of toasts">
+          <app-toast [title]="'Status'" [message]="'Loading...'" [message]="'Carregando, aguarde.'"
+            [customClass]="toast.type === 'loading' ? 'error-toast' : 'loading-toast'"
+            (closeHit)="toast.isShow = true"></app-toast>
+        </div>
       </div>
-      <div class="md-12">
-        <h5 class="text-center">Empregados</h5>       
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Nome</th>
-              <th scope="col" class="text-center">CPF</th>
-              <th scope="col" class="text-center">Data início</th>
-              <th scope="col" class="text-center">Cargo</th>
-              <th scope="col" class="text-center">Remuneração</th>
-              <th scope="col" class="text-center">Ação</th>
-            </tr>
-          </thead>
+      <div *ngIf="!loading">
+        <div *ngIf="!loading && message">
+          <div *ngFor="let toast of toasts">
+            <app-toast [title]="toast.title" [message]="message"
+              [customClass]="toast.type === 'alert' ? 'error-toast' : 'alert-toast'"
+              (closeHit)="clearMessage()"></app-toast>
+          </div>
+        </div>
+      </div>
 
-          <tbody *ngFor="let funcionario of funcionariosEncontradoContrato let i = index">            
+    </div>
+    <div class="md-12">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Empresa</th>
+            <th scope="col" class="text-center">Contrato</th>
+            <th scope="col" class="text-center">Início vigência</th>
+            <th scope="col" class="text-center">Fim vigência</th>
+            <th scope="col" class="text-center">Inc.grupo A</th>
+            <th scope="col" class="text-center">Ação</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="funcionariosEncontradoContrato.length > 0">
+          <ng-container>
             <tr>
-                <th>{{ funcionario.pessoaFisica?.nome }}</th>
-                <th class="text-center">{{ funcionario.pessoaFisica?.cpf }}</th>
-                <th class="text-center">{{ funcionario.contratoTerceirizadoList[0].dataInicio  | date:'dd/MM/yyyy' }}</th>
-                <th class="text-center">{{ funcionario.contratoTerceirizadoList[0]?.cargo }}</th>
-                <th class="text-center">{{ formatarNumero(funcionario.contratoTerceirizadoList[0]?.remuneracao) }}</th>
-                <th *ngIf="!funcionario.contratoTerceirizadoList[0]?.dataDesligamento" class="text-left">
-                 <button id="btnAddNovoTermoAditivoId" class="btn btn-primary btn-custom mx-1" type="button"
-                    (click)="novoTermoAditivo(funcionario.contrato?.idContrato,funcionario.pessoaFisica?.cpf)">Novo
-                    termo aditivo</button>
-                  <button id="btnEditarfuncionarioId" class="btn btn-primary btn-custom mx-1" type="button"
-                    (click)="editarFuncionario(funcionario.pessoaFisica?.cpf)">Editar funcionário</button>
-                  <app-modal [title]="'Confirmação'" [body]="'Tem certeza que deseja desligar o funcionário ' + (funcionario?.pessoaFisica?.nome || '') +'?'" 
-                    [yesButton]="'Sim'" [noButton]="'Não'" [context]="this" [buttonTitle]="'Desligar'" [id]="i"
-                    id="btnDesligarId" [buttonClass]="'btn btn-secondary btn-sm'"
-                    [enabled]="!funcionario.contratoTerceirizadoList?.id"></app-modal>
-                  <app-modal [title]="'Confirmação'" [body]='"Tem certeza que deseja deletar essa associação?"'
-                    [yesButton]="'Sim'" [noButton]="'Não'" [context]="this" [buttonTitle]="'Deletar'" [id]="i"
-                    id="btndeletarConTercerizadoId" [buttonClass]="'btn btn-danger btn-sm mx-1'"
-                    [enabled]="!funcionario.contratoTerceirizadoList?.id"></app-modal>
-                </th>
-                <th *ngIf="funcionario.contratoTerceirizadoList[0]?.dataDesligamento" class="text-center">                  
-                  <label class="texto-vermelho">{{'Desligado ' +
-                    (funcionario.contratoTerceirizadoList[0]?.dataDesligamento | date:'dd/MM/yyyy') }} </label>
-                </th>
-              </tr>             
-            <ng-container *ngFor="let funcionarioSecundaria of funcionario.contratoTerceirizadoList.slice(1); let j = index">
-              
-              <tr *ngIf="funcionario.contratoTerceirizadoList.length > 1">
-                  <td></td>
-                  <td></td>
-                  <td class="text-center">{{ funcionarioSecundaria.dataInicio  | date:'dd/MM/yyyy' }}</td>
-                  <td class="text-center">{{ funcionarioSecundaria?.cargo ? funcionarioSecundaria.cargo :
-                      ''}}</td>
-                  <td class="text-center">{{ funcionarioSecundaria?.remuneracao ?
-                      formatarNumero(funcionarioSecundaria.remuneracao) : '' }}</td>
-                      <td></td>
-                  </tr>
-          </ng-container>               
+              <td title={{funcionariosEncontradoContrato[0].contrato?.pessoaJuridica?.nome}}
+                *ngIf="funcionariosEncontradoContrato[0].contrato?.pessoaJuridica?.nome">
+                {{ truncateText(funcionariosEncontradoContrato[0].contrato?.pessoaJuridica?.nome || '') }}
+              </td>
+              <td class="text-center">
+                {{ funcionariosEncontradoContrato[0].contrato?.numero }}
+              </td>
+              <td class="text-center">
+                {{ funcionariosEncontradoContrato[0].contrato?.inicioVigencia | date:'dd/MM/yyyy' }}
+              </td>
+              <td class="text-center">
+                {{ funcionariosEncontradoContrato[0].contrato?.fimVigencia | date:'dd/MM/yyyy' }}
+              </td>
+              <td class="text-center">
+                {{ incGrupoA }}
+              </td>
+              <td class="text-center">
+                <button id="btnHistProvisaoId" class="btn btn-primary mx-1 btn-custom" type="button"
+                  (click)="histProvisao(funcionariosEncontradoContrato[0].contrato?.idContrato)">Provisões</button>
+                <button id="btnHistLibercaoId" class="btn btn-primary  mx-1 btn-custom" type="button"
+                  (click)="histLiberacao(funcionariosEncontradoContrato[0].contrato?.idContrato)">Liberações</button>
+                <button id="btnIncGrupAId" class="btn btn-primary  mx-1 btn-custom" type="button"
+                  (click)="adicionarIncGrupoA(funcionariosEncontradoContrato[0].contrato?.idContrato)">Adicionar
+                  inc.grupo
+                  A</button>
+                <button id="btnAdicionarFuncionarioId" class="btn btn-primary  btn-custom mx-1" type="button"
+                  (click)="adicionarFuncionario(funcionariosEncontradoContrato[0].contrato?.idContrato)">Adicionar
+                  funcionário</button>
+            </tr>
+          </ng-container>
         </tbody>
-        </table>
-        <div class="md-12">
-          <nav aria-label="...">
-            <button id="btnVoltarPesquContId" type="submit" (click)=" toGoBack()" [disabled]="loading && !loaded"
-              class="btn btn-primary">Voltar</button>           
-          </nav>
-        </div>
+      </table>
+    </div>
+    <div class="md-12">
+      <h5 class="text-center">Empregados</h5>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col" class="text-center">CPF</th>
+            <th scope="col" class="text-center">Data início</th>
+            <th scope="col" class="text-center">Cargo</th>
+            <th scope="col" class="text-center">Remuneração</th>
+            <th scope="col" class="text-center">Ação</th>
+          </tr>
+        </thead>
+
+        <tbody *ngFor="let funcionario of funcionariosEncontradoContrato let i = index">
+          <tr>
+            <th>{{ funcionario.pessoaFisica?.nome }}</th>
+            <th class="text-center">{{ funcionario.pessoaFisica?.cpf }}</th>
+            <th class="text-center">{{ funcionario.contratoTerceirizadoList[0].dataInicio | date:'dd/MM/yyyy' }}</th>
+            <th class="text-center">{{ funcionario.contratoTerceirizadoList[0]?.cargo }}</th>
+            <th class="text-center">{{ formatarNumero(funcionario.contratoTerceirizadoList[0]?.remuneracao) }}</th>
+            
+            <th>
+              <div *ngIf="funcionario.contratoTerceirizadoList.length > 0 && !funcionario.contratoTerceirizadoList[0]?.dataDesligamento" class="text-left">
+                
+                <button id="btnAddNovoTermoAditivoId" class="btn btn-primary btn-custom mx-1" type="button"
+                  (click)="novoTermoAditivo(funcionario.contrato?.idContrato,funcionario.pessoaFisica?.cpf)">Novo
+                  termo aditivo</button>
+                <button id="btnEditarfuncionarioId" class="btn btn-primary btn-custom mx-1" type="button"
+                  (click)="editarFuncionario(funcionario.pessoaFisica?.cpf)">Editar funcionário</button>
+                <app-modal [title]="'Confirmação'"
+                  [body]="'Tem certeza que deseja desligar o funcionário ' + (funcionario?.pessoaFisica?.nome || '') +'?'"
+                  [yesButton]="'Sim'" [noButton]="'Não'" [context]="this" [buttonTitle]="'Desligar'" [id]="i"
+                  id="btnDesligarId" [buttonClass]="'btn btn-secondary btn-sm'"
+                  [enabled]="!funcionario.contratoTerceirizadoList[0]?.id"></app-modal>
+                <app-modal [title]="'Confirmação'" [body]='"Tem certeza que deseja deletar essa associação?"'
+                  [yesButton]="'Sim'" [noButton]="'Não'" [context]="this" [buttonTitle]="'Deletar'" [id]="i"
+                  id="btndeletarConTercerizadoId" [buttonClass]="'btn btn-danger btn-sm mx-1'"
+                  [enabled]="!funcionario.contratoTerceirizadoList?.id"></app-modal>
+              </div>
+              <div *ngIf="funcionario.contratoTerceirizadoList.length > 0 && funcionario.contratoTerceirizadoList[0]?.dataDesligamento" class="text-center">
+                <label class="texto-vermelho">{{'Desligado ' +
+                  (funcionario.contratoTerceirizadoList[0]?.dataDesligamento | date:'dd/MM/yyyy') }} </label>
+              </div>
+            </th>
+          </tr>
+          <ng-container
+            *ngFor="let funcionarioSecundaria of funcionario.contratoTerceirizadoList.slice(1); let j = index">
+
+            <tr *ngIf="funcionario.contratoTerceirizadoList.length > 1">
+              <td></td>
+              <td></td>
+              <td class="text-center">{{ funcionarioSecundaria.dataInicio | date:'dd/MM/yyyy' }}</td>
+              <td class="text-center">{{ funcionarioSecundaria?.cargo ? funcionarioSecundaria.cargo :
+                ''}}</td>
+              <td class="text-center">{{ funcionarioSecundaria?.remuneracao ?
+                formatarNumero(funcionarioSecundaria.remuneracao) : '' }}</td>
+              <td></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="md-12">
+        <nav aria-label="...">
+          <button id="btnVoltarPesquContId" type="submit" (click)=" toGoBack()" [disabled]="loading && !loaded"
+            class="btn btn-primary">Voltar</button>
+        </nav>
       </div>
     </div>
- </app-top-left-menu>
+  </div>
+</app-top-left-menu>

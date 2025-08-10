@@ -55,7 +55,8 @@ export class ListarFuncionariosComponent implements OnInit, ModalCallback {
     this.listarFuncService
       .getFuncionarios(idContrato)
       .subscribe({
-        next: (resp) => {          
+        next: (resp) => {        
+          console.log(resp);  
           this.loading = false;
           this.loaded = true; 
           this.buscarIncGrupoA(idContrato)
@@ -259,6 +260,11 @@ export class ListarFuncionariosComponent implements OnInit, ModalCallback {
   }
 
   formatarNumero(numero: number): string {
+
+    if (numero == null || numero == undefined) {
+      return "0,00"
+    }
+
     const formato = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
     return numero.toLocaleString('pt-BR', formato);
   }
