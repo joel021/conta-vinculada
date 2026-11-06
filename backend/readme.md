@@ -92,3 +92,18 @@ $ source .env-<profile>
 
 **Attention!**
 The JWT key should be a string with characters inside the Base64 alphabet (A-Z, a-z, 0-9, +, /, and optionally = padding).
+
+
+**Run in development environment**
+$ spring-boot:run -Dspring-boot.run.profiles=dev
+
+**Visualize swagger**
+http://localhost:8082/swagger-ui/index.html
+
+**Visualize the database**
+H2 Web Console: http://localhost:8082/h2-console
+      • JDBC URL: jdbc:h2:mem:esocial_connector_db
+      • User Name: sa
+      • Password: (leave blank)
+
+
