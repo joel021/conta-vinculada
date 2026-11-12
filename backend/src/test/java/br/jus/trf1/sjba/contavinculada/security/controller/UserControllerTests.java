@@ -99,7 +99,7 @@ public class UserControllerTests {
     public void loginLdapTest() throws Exception {
 
         UserDataDTO userAuth = new UserDataDTO();
-        userAuth.setUsuario("uid=admin,ou=system");
+        userAuth.setUsuario("uid=admin,ou=syst");
         userAuth.setDominio("   ");
         userAuth.setSenha("secret");
         String jsonBodyString = new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(userAuth);

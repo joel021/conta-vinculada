@@ -5,7 +5,7 @@ describe('login tests', () => {
     it('Auth with wrong credentials', () => {
         cy.visit('/login')
         cy.get("#usernameId").type("0000000000")
-        cy.get("#passwordId").type("wrong_password")
+        cy.get("#passwordId").type("uyygyugyuw")
         cy.get('select').select(1)
         cy.get("#buttonLoginId").click()
         cy.contains('Seu usuário ou senha da Justiça estão incorretos. O usuário deve ser a sua matrícula')

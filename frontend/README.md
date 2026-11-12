@@ -8,7 +8,7 @@
 
 With node installed, you can execute:
 
-$nvm install 18
-$nvm use 18
+$nvm install 20
+$nvm use 20
 $npm install
 $npm start
